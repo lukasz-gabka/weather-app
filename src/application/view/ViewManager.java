@@ -3,8 +3,11 @@ package application.view;
 import application.controller.BaseController;
 import application.controller.DefaultPaneController;
 import application.controller.MainWindowController;
+import application.controller.WeatherPaneController;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -31,11 +34,38 @@ public class ViewManager {
         DefaultPaneController defaultRightPaneController = new DefaultPaneController(this, "DefaultPane.fxml");
 
         HBox hBox = (HBox) initializeLayout(mainWindowController);
-        AnchorPane defaultLeftPane = (AnchorPane) initializeLayout(defaultLeftPaneController);
-        AnchorPane defaultRightPane = (AnchorPane) initializeLayout(defaultRightPaneController);
 
-        hBox.getChildren().addAll(defaultLeftPane, defaultRightPane);
+        AnchorPane leftPane = (AnchorPane) initializeLayout(defaultLeftPaneController);
+        changeId(leftPane, "#typeCityTextField", "typeCityLeftTextField");
+
+        AnchorPane rightPane = (AnchorPane) initializeLayout(defaultRightPaneController);
+        changeId(rightPane, "#typeCityTextField", "typeCityRightTextField");
+
+        hBox.getChildren().addAll(leftPane, rightPane);
 
         return hBox;
+    }
+
+    public void changeId(Parent parent, String oldId, String newId) {
+        Node node = parent.lookup(oldId);
+        node.setId(newId);
+    }
+
+    public void initializeWeatherWindow(Scene scene, String text, String id) {
+        WeatherPaneController controller = new WeatherPaneController(this, "WeatherPane.fxml");
+
+        AnchorPane anchorPane = (AnchorPane) initializeLayout(controller);
+        changeId(anchorPane, "#typeCityTextField", id);
+        controller.setTypeCityTextField(text);
+
+        int paneIndex;
+        if (id.contains("Left"))
+            paneIndex = 0;
+        else
+            paneIndex = 1;
+
+        HBox hBox = (HBox) scene.getRoot();
+
+        hBox.getChildren().set(paneIndex, anchorPane);
     }
 }
