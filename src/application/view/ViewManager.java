@@ -1,38 +1,41 @@
 package application.view;
 
 import application.controller.BaseController;
+import application.controller.DefaultPaneController;
 import application.controller.MainWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 
 public class ViewManager {
 
-    private void initializeStage(BaseController baseController) {
+    private Parent initializeLayout(BaseController baseController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(baseController.getFxmlName()));
         fxmlLoader.setController(baseController);
 
-        Parent parent;
-
         try {
-            parent = fxmlLoader.load();
+            Parent parent = fxmlLoader.load();
+            return parent;
         } catch(IOException e) {
             e.printStackTrace();
-            return;
+            return null;
         }
-
-        Scene scene = new Scene(parent);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-
-        stage.show();
     }
 
-    public void showDefaultWindow() {
-        MainWindowController controller = new MainWindowController(this, "MainWindow.fxml");
-        initializeStage(controller);
+    public HBox initializeDefaultWindow() {
+        MainWindowController mainWindowController = new MainWindowController(this, "MainWindow.fxml");
+        DefaultPaneController defaultLeftPaneController = new DefaultPaneController(this, "DefaultPane.fxml");
+        DefaultPaneController defaultRightPaneController = new DefaultPaneController(this, "DefaultPane.fxml");
+
+        HBox hBox = (HBox) initializeLayout(mainWindowController);
+        AnchorPane defaultLeftPane = (AnchorPane) initializeLayout(defaultLeftPaneController);
+        AnchorPane defaultRightPane = (AnchorPane) initializeLayout(defaultLeftPaneController);
+
+        hBox.getChildren().addAll(defaultLeftPane, defaultRightPane);
+
+        return hBox;
     }
 }

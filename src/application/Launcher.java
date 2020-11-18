@@ -2,6 +2,7 @@ package application;
 
 import application.view.ViewManager;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Launcher extends Application {
@@ -14,6 +15,9 @@ public class Launcher extends Application {
     public void start(Stage stage) throws Exception {
         ViewManager viewManager = new ViewManager();
 
-        viewManager.showDefaultWindow();
+        Scene scene = new Scene(viewManager.initializeDefaultWindow());
+        stage.setScene(scene);
+
+        stage.show();
     }
 }
