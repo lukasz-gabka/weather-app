@@ -32,7 +32,7 @@ public class ViewManager {
 
         HBox hBox = (HBox) initializeLayout(mainWindowController);
         AnchorPane defaultLeftPane = (AnchorPane) initializeLayout(defaultLeftPaneController);
-        AnchorPane defaultRightPane = (AnchorPane) initializeLayout(defaultLeftPaneController);
+        AnchorPane defaultRightPane = (AnchorPane) initializeLayout(defaultRightPaneController);
 
         hBox.getChildren().addAll(defaultLeftPane, defaultRightPane);
 
