@@ -4,4 +4,5 @@ module weather.app {
     requires javafx.controls;
 
     opens application;
+    opens application.controller;
 }
