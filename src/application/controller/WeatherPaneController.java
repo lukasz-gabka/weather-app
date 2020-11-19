@@ -31,7 +31,7 @@ public class WeatherPaneController extends BaseController implements Initializab
         Scene scene = errorLabel.getScene();
         String id = typeCityTextField.getId();
 
-        viewManager.initializeDefaultWindow(scene, id);
+        viewManager.addLayoutToScene(new DefaultPaneController(viewManager), scene, "", id);
     }
 
     public WeatherPaneController(ViewManager viewManager) {

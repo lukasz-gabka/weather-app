@@ -12,6 +12,8 @@ public abstract class BaseController {
         this.fxmlName = fxmlName;
     }
 
+    public void setTypeCityTextField(String text) {}
+
     public String getFxmlName() {
         return fxmlName;
     }

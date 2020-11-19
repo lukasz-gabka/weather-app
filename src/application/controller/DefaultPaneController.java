@@ -24,7 +24,7 @@ public class DefaultPaneController extends BaseController implements Initializab
         String textFromField = typeCityTextField.getText();
         String id = typeCityTextField.getId();
 
-        viewManager.initializeWeatherWindow(scene, textFromField, id);
+        viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, textFromField, id);
     }
 
     public DefaultPaneController(ViewManager viewManager) {
