@@ -5,8 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
-public class DefaultPaneController extends BaseController{
+public class WeatherPaneController extends BaseController{
 
     @FXML
     private TextField typeCityTextField;
@@ -15,15 +16,21 @@ public class DefaultPaneController extends BaseController{
     private Label errorLabel;
 
     @FXML
-    void typeCityAction() {
+    private VBox weatherVBox;
+
+    @FXML
+    void deleteCityAction() {
         Scene scene = errorLabel.getScene();
-        String textFromField = typeCityTextField.getText();
         String id = typeCityTextField.getId();
 
-        viewManager.initializeWeatherWindow(scene, textFromField, id);
+        viewManager.initializeDefaultWindow(scene, id);
     }
 
-    public DefaultPaneController(ViewManager viewManager, String fxmlName) {
+    public WeatherPaneController(ViewManager viewManager, String fxmlName) {
         super(viewManager, fxmlName);
+    }
+
+    public void setTypeCityTextField(String text) {
+        typeCityTextField.setText(text);
     }
 }
