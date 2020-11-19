@@ -28,7 +28,7 @@ public class ViewManager {
         }
     }
 
-    public HBox initializeDefaultWindow() {
+    public HBox initializeDefaultWindowOnStartup() {
         MainWindowController mainWindowController = new MainWindowController(this, "MainWindow.fxml");
         DefaultPaneController defaultLeftPaneController = new DefaultPaneController(this, "DefaultPane.fxml");
         DefaultPaneController defaultRightPaneController = new DefaultPaneController(this, "DefaultPane.fxml");
@@ -57,6 +57,23 @@ public class ViewManager {
         AnchorPane anchorPane = (AnchorPane) initializeLayout(controller);
         changeId(anchorPane, "#typeCityTextField", id);
         controller.setTypeCityTextField(text);
+
+        int paneIndex;
+        if (id.contains("Left"))
+            paneIndex = 0;
+        else
+            paneIndex = 1;
+
+        HBox hBox = (HBox) scene.getRoot();
+
+        hBox.getChildren().set(paneIndex, anchorPane);
+    }
+
+    public void initializeDefaultWindow(Scene scene, String id) {
+        DefaultPaneController controller = new DefaultPaneController(this, "DefaultPane.fxml");
+
+        AnchorPane anchorPane = (AnchorPane) initializeLayout(controller);
+        changeId(anchorPane, "#typeCityTextField", id);
 
         int paneIndex;
         if (id.contains("Left"))

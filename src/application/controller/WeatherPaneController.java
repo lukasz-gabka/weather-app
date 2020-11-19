@@ -20,7 +20,10 @@ public class WeatherPaneController extends BaseController{
 
     @FXML
     void deleteCityAction() {
+        Scene scene = errorLabel.getScene();
+        String id = typeCityTextField.getId();
 
+        viewManager.initializeDefaultWindow(scene, id);
     }
 
     public WeatherPaneController(ViewManager viewManager, String fxmlName) {
