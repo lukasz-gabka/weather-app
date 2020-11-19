@@ -2,11 +2,15 @@ package application.controller;
 
 import application.view.ViewManager;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class DefaultPaneController extends BaseController{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class DefaultPaneController extends BaseController implements Initializable {
 
     @FXML
     private TextField typeCityTextField;
@@ -25,5 +29,10 @@ public class DefaultPaneController extends BaseController{
 
     public DefaultPaneController(ViewManager viewManager) {
         super(viewManager, "DefaultPane.fxml");
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        typeCityTextField.setFocusTraversable(false);
     }
 }
