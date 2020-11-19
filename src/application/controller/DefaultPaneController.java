@@ -23,7 +23,7 @@ public class DefaultPaneController extends BaseController{
         viewManager.initializeWeatherWindow(scene, textFromField, id);
     }
 
-    public DefaultPaneController(ViewManager viewManager, String fxmlName) {
-        super(viewManager, fxmlName);
+    public DefaultPaneController(ViewManager viewManager) {
+        super(viewManager, "DefaultPane.fxml");
     }
 }

@@ -29,9 +29,9 @@ public class ViewManager {
     }
 
     public HBox initializeDefaultWindowOnStartup() {
-        MainWindowController mainWindowController = new MainWindowController(this, "MainWindow.fxml");
-        DefaultPaneController defaultLeftPaneController = new DefaultPaneController(this, "DefaultPane.fxml");
-        DefaultPaneController defaultRightPaneController = new DefaultPaneController(this, "DefaultPane.fxml");
+        MainWindowController mainWindowController = new MainWindowController(this);
+        DefaultPaneController defaultLeftPaneController = new DefaultPaneController(this);
+        DefaultPaneController defaultRightPaneController = new DefaultPaneController(this);
 
         HBox hBox = (HBox) initializeLayout(mainWindowController);
 
@@ -52,7 +52,7 @@ public class ViewManager {
     }
 
     public void initializeWeatherWindow(Scene scene, String text, String id) {
-        WeatherPaneController controller = new WeatherPaneController(this, "WeatherPane.fxml");
+        WeatherPaneController controller = new WeatherPaneController(this);
 
         AnchorPane anchorPane = (AnchorPane) initializeLayout(controller);
         changeId(anchorPane, "#typeCityTextField", id);
@@ -70,7 +70,7 @@ public class ViewManager {
     }
 
     public void initializeDefaultWindow(Scene scene, String id) {
-        DefaultPaneController controller = new DefaultPaneController(this, "DefaultPane.fxml");
+        DefaultPaneController controller = new DefaultPaneController(this);
 
         AnchorPane anchorPane = (AnchorPane) initializeLayout(controller);
         changeId(anchorPane, "#typeCityTextField", id);

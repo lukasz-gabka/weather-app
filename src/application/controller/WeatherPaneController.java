@@ -26,8 +26,8 @@ public class WeatherPaneController extends BaseController{
         viewManager.initializeDefaultWindow(scene, id);
     }
 
-    public WeatherPaneController(ViewManager viewManager, String fxmlName) {
-        super(viewManager, fxmlName);
+    public WeatherPaneController(ViewManager viewManager) {
+        super(viewManager, "WeatherPane.fxml");
     }
 
     public void setTypeCityTextField(String text) {
