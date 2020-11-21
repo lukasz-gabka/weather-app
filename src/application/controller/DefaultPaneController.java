@@ -35,4 +35,8 @@ public class DefaultPaneController extends BaseController implements Initializab
     public void initialize(URL url, ResourceBundle resourceBundle) {
         typeCityTextField.setFocusTraversable(false);
     }
+
+    public void setErrorLabel(String text) {
+        errorLabel.setText(text);
+    }
 }
