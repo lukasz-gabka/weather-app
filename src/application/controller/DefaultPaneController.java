@@ -1,6 +1,8 @@
 package application.controller;
 
+import application.model.WeatherData;
 import application.view.ViewManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -24,7 +26,15 @@ public class DefaultPaneController extends BaseController implements Initializab
         String textFromField = typeCityTextField.getText();
         String id = typeCityTextField.getId();
 
-        viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, textFromField, id);
+        WeatherData weatherData = new WeatherData();
+
+        Thread thread = new Thread(() -> {
+            weatherData.getWeatherData(textFromField, weatherData.DAILY_FORECAST_URL);
+            Platform.runLater(() -> {
+                viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, textFromField, id);});
+        });
+
+        thread.start();
     }
 
     public DefaultPaneController(ViewManager viewManager) {
