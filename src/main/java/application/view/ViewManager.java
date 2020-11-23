@@ -18,7 +18,7 @@ public class ViewManager {
     private final String ERROR_LABEL_DEFAULT_ID = "#errorLabel";
 
     private Parent initializeLayout(BaseController baseController) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(baseController.getFxmlName()));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(baseController.getFxmlName()));
         fxmlLoader.setController(baseController);
 
         try {
