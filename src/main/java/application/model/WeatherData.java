@@ -1,10 +1,13 @@
 package application.model;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import application.model.JSONParsedObjects.DataJSONObject;
+import application.model.JSONParsedObjects.MainJSONObject;
+import application.model.JSONParsedObjects.WeatherJSONObject;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 public class WeatherData {
     public final String CURRENT_WEATHER_URL = "http://api.weatherbit.io/v2.0/current?lang=pl";
@@ -13,26 +16,30 @@ public class WeatherData {
     private final String CITY_URL = "&city=";
 
     public void getWeatherData(String cityName, String baseUrl) {
-        HttpClient client = HttpClient.newHttpClient();
-
+        HttpClient client = HttpClientBuilder.create().build();
         String url = baseUrl + API_URL + CITY_URL + convertSpaceToDash(cityName);
-
-        HttpRequest request = HttpRequest.newBuilder(URI.create(url)).header("accept", "application/json").build();
+        HttpGet request = new HttpGet(url);
 
         try {
-            HttpResponse<String> result = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse httpResult = client.execute(request);
 
-            System.out.println(result.body());
+            String result = JSONParser.convertJSONToString(httpResult);
+
+            MainJSONObject mainObject = JSONParser.convertStringToObject(result);
+            DataJSONObject dataJSONObject = mainObject.getData().get(0);
+            WeatherJSONObject weatherJSONObject = dataJSONObject.getWeather();
+
+            System.out.println(mainObject.getCity_name());
+            System.out.println(dataJSONObject.getClouds());
+            System.out.println(weatherJSONObject.getDescription());
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public String convertSpaceToDash(String text) {
+    private String convertSpaceToDash(String text) {
         return text.replace(' ', '-');
     }
 }

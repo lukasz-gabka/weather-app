@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,7 +28,7 @@ public class DefaultPaneController extends BaseController implements Initializab
         WeatherData weatherData = new WeatherData();
 
         Thread thread = new Thread(() -> {
-            weatherData.getWeatherData(textFromField, weatherData.DAILY_FORECAST_URL);
+            weatherData.getWeatherData(textFromField, weatherData.CURRENT_WEATHER_URL);
             Platform.runLater(() -> {
                 viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, textFromField, id);});
         });
