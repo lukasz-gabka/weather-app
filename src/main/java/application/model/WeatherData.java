@@ -1,14 +1,13 @@
 package application.model;
 
 import java.io.IOException;
-
-import application.model.currentWeatherObjects.MainObject;
-import org.apache.http.HttpEntity;
+import application.model.JSONParsedObjects.DataJSONObject;
+import application.model.JSONParsedObjects.MainJSONObject;
+import application.model.JSONParsedObjects.WeatherJSONObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 
 public class WeatherData {
     public final String CURRENT_WEATHER_URL = "http://api.weatherbit.io/v2.0/current?lang=pl";
@@ -23,10 +22,16 @@ public class WeatherData {
 
         try {
             HttpResponse httpResult = client.execute(request);
-            HttpEntity entity = httpResult.getEntity();
-            String result = EntityUtils.toString(entity);
 
-            MainObject currentWeatherObject = JSONParser.parseCurrentWeather(result);
+            String result = JSONParser.convertJSONToString(httpResult);
+
+            MainJSONObject mainObject = JSONParser.convertStringToObject(result);
+            DataJSONObject dataJSONObject = mainObject.getData().get(0);
+            WeatherJSONObject weatherJSONObject = dataJSONObject.getWeather();
+
+            System.out.println(mainObject.getCity_name());
+            System.out.println(dataJSONObject.getClouds());
+            System.out.println(weatherJSONObject.getDescription());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -34,7 +39,7 @@ public class WeatherData {
         }
     }
 
-    public String convertSpaceToDash(String text) {
+    private String convertSpaceToDash(String text) {
         return text.replace(' ', '-');
     }
 }
