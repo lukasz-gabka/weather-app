@@ -6,7 +6,4 @@ public class MainObject {
 
     private ArrayList<DataObject> data;
 
-    public MainObject(ArrayList<DataObject> data) {
-        this.data = data;
-    }
 }

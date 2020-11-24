@@ -1,6 +1,8 @@
 package application.model;
 
 import java.io.IOException;
+
+import application.model.currentWeatherObjects.MainObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -24,7 +26,7 @@ public class WeatherData {
             HttpEntity entity = httpResult.getEntity();
             String result = EntityUtils.toString(entity);
 
-            System.out.println(result);
+            MainObject currentWeatherObject = JSONParser.parseCurrentWeather(result);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
