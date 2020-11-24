@@ -1,10 +1,12 @@
 package application.model;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 public class WeatherData {
     public final String CURRENT_WEATHER_URL = "http://api.weatherbit.io/v2.0/current?lang=pl";
@@ -13,19 +15,17 @@ public class WeatherData {
     private final String CITY_URL = "&city=";
 
     public void getWeatherData(String cityName, String baseUrl) {
-        HttpClient client = HttpClient.newHttpClient();
-
+        HttpClient client = HttpClientBuilder.create().build();
         String url = baseUrl + API_URL + CITY_URL + convertSpaceToDash(cityName);
-
-        HttpRequest request = HttpRequest.newBuilder(URI.create(url)).header("accept", "application/json").build();
+        HttpGet request = new HttpGet(url);
 
         try {
-            HttpResponse<String> result = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse httpResult = client.execute(request);
+            HttpEntity entity = httpResult.getEntity();
+            String result = EntityUtils.toString(entity);
 
-            System.out.println(result.body());
+            System.out.println(result);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();

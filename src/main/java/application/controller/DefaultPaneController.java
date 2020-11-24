@@ -29,7 +29,7 @@ public class DefaultPaneController extends BaseController implements Initializab
         WeatherData weatherData = new WeatherData();
 
         Thread thread = new Thread(() -> {
-            weatherData.getWeatherData(textFromField, weatherData.DAILY_FORECAST_URL);
+            weatherData.getWeatherData(textFromField, weatherData.CURRENT_WEATHER_URL);
             Platform.runLater(() -> {
                 viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, textFromField, id);});
         });
