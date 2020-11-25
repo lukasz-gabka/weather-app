@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="179.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CurrentWeatherPaneController">
+   <children>
+      <ImageView fx:id="WeatherImage" fitHeight="100.0" fitWidth="100.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/test_image.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="temperatureLabel" alignment="CENTER" layoutX="116.0" layoutY="14.0" prefHeight="49.0" prefWidth="203.0" text="99 oC">
+         <font>
+            <Font name="System Bold" size="48.0" />
+         </font>
+      </Label>
+      <Label fx:id="descriptionLabel" alignment="CENTER" layoutX="118.0" layoutY="84.0" prefHeight="30.0" prefWidth="203.0" text="niewielkie opady deszczu" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="pressureLabel" alignment="CENTER" layoutX="13.0" layoutY="130.0" prefHeight="17.0" prefWidth="306.0" text="Ciśnienie: 1014,06 hPa">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="cloudsLabel" alignment="CENTER" layoutX="13.0" layoutY="155.0" prefHeight="17.0" prefWidth="306.0" text="Zachmurzenie: 35%">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
