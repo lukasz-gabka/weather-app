@@ -1,9 +1,6 @@
 package application.model;
 
-import java.io.IOException;
-import application.model.JSONParsedObjects.DataJSONObject;
 import application.model.JSONParsedObjects.MainJSONObject;
-import application.model.JSONParsedObjects.WeatherJSONObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -15,7 +12,7 @@ public class WeatherData {
     private final String API_URL = "&key="; //insert your weatherbit.io api key at the end of this string
     private final String CITY_URL = "&city=";
 
-    public void getWeatherData(String cityName, String baseUrl) {
+    public MainJSONObject getWeatherData(String cityName, String baseUrl) {
         HttpClient client = HttpClientBuilder.create().build();
         String url = baseUrl + API_URL + CITY_URL + convertSpaceToDash(cityName);
         HttpGet request = new HttpGet(url);
@@ -26,16 +23,30 @@ public class WeatherData {
             String result = JSONParser.convertJSONToString(httpResult);
 
             MainJSONObject mainObject = JSONParser.convertStringToObject(result);
-            DataJSONObject dataJSONObject = mainObject.getData().get(0);
-            WeatherJSONObject weatherJSONObject = dataJSONObject.getWeather();
+            mainObject.isExist();
 
-            System.out.println(mainObject.getCity_name());
-            System.out.println(dataJSONObject.getClouds());
-            System.out.println(weatherJSONObject.getDescription());
-        } catch (IOException e) {
+            return mainObject;
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
+
+            MainJSONObject mainObject = new MainJSONObject();
+            mainObject.setErrorMessage("Nie znaleziono podanej miejscowości.");
+
+            return mainObject;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+
+            MainJSONObject mainObject = new MainJSONObject();
+            mainObject.setErrorMessage("Błąd serwera. Spróbuj ponownie później.");
+
+            return mainObject;
         } catch (Exception e) {
             e.printStackTrace();
+
+            MainJSONObject mainObject = new MainJSONObject();
+            mainObject.setErrorMessage("Nieznany błąd");
+
+            return mainObject;
         }
     }
 

@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.JSONParsedObjects.MainJSONObject;
 import application.model.WeatherData;
 import application.view.ViewManager;
 import javafx.application.Platform;
@@ -21,16 +22,23 @@ public class DefaultPaneController extends BaseController implements Initializab
 
     @FXML
     void typeCityAction() {
+        errorLabel.setText("");
+
         Scene scene = errorLabel.getScene();
         String textFromField = typeCityTextField.getText();
         String id = typeCityTextField.getId();
-
         WeatherData weatherData = new WeatherData();
 
         Thread thread = new Thread(() -> {
-            weatherData.getWeatherData(textFromField, weatherData.CURRENT_WEATHER_URL);
+            MainJSONObject object = weatherData.getWeatherData(textFromField, weatherData.CURRENT_WEATHER_URL);
+
             Platform.runLater(() -> {
-                viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, textFromField, id);});
+                if (object.getErrorMessage() == null) {
+                        viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, textFromField, id);
+                } else {
+                        errorLabel.setText(object.getErrorMessage());
+                }
+            });
         });
 
         thread.start();
