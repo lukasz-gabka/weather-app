@@ -30,13 +30,15 @@ public class DefaultPaneController extends BaseController implements Initializab
         WeatherData weatherData = new WeatherData();
 
         Thread thread = new Thread(() -> {
-            MainJSONObject object = weatherData.getWeatherData(textFromField, weatherData.CURRENT_WEATHER_URL);
+            MainJSONObject object = weatherData.getWeatherData(textFromField, weatherData.DAILY_FORECAST_URL);
 
             Platform.runLater(() -> {
                 if (object.getErrorMessage() == null) {
-                        viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, textFromField, id);
+                    String fullCityName = object.getFullCityName();
+
+                    viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, fullCityName, id);
                 } else {
-                        errorLabel.setText(object.getErrorMessage());
+                    errorLabel.setText(object.getErrorMessage());
                 }
             });
         });

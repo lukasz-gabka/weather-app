@@ -7,6 +7,7 @@ public class DataJSONObject {
     private String city_name;
     private int clouds;
     private WeatherJSONObject weather;
+    private String datetime;
     private float temp;
 
     public float getPres() {
@@ -27,6 +28,10 @@ public class DataJSONObject {
 
     public WeatherJSONObject getWeather() {
         return weather;
+    }
+
+    public String getDatetime() {
+        return datetime;
     }
 
     public float getTemp() {
