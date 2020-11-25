@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import java.net.URL;
@@ -17,17 +18,20 @@ public class WeatherPaneController extends BaseController implements Initializab
     private TextField typeCityTextField;
 
     @FXML
-    private Button deleteCityButton;
-
-    @FXML
     private Label errorLabel;
 
     @FXML
-    private VBox weatherVBox;
+    private Button deleteCityButton;
+
+    @FXML
+    private Tab currentWeatherTab;
+
+    @FXML
+    private VBox dailyForecastVBox;
 
     @FXML
     void deleteCityAction() {
-        Scene scene = errorLabel.getScene();
+        Scene scene = typeCityTextField.getScene();
         String id = typeCityTextField.getId();
 
         viewManager.addLayoutToScene(new DefaultPaneController(viewManager), scene, "", id);
