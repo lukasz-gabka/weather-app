@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.JSONParsedObjects.MainJSONObject;
 import application.view.ViewManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,6 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class WeatherPaneController extends BaseController implements Initializable {
+
+    private MainJSONObject weatherData;
 
     @FXML
     private TextField typeCityTextField;
@@ -36,22 +39,30 @@ public class WeatherPaneController extends BaseController implements Initializab
         viewManager.changeLayout(scene, this, new DefaultPaneController(viewManager));
     }
 
-    public WeatherPaneController(ViewManager viewManager, String text) {
+    public WeatherPaneController(ViewManager viewManager, String text, MainJSONObject weatherData) {
         super(viewManager, "WeatherPane.fxml");
-        typeCityTextField.setText(text);
+        this.weatherData = weatherData;
+        typeCityTextField.setText(weatherData.getFullCityName());
     }
 
     public void setTypeCityTextField(String text) {
         typeCityTextField.setText(text);
     }
 
-    public TabPane getWeatherTabPane() {
-        return weatherTabPane;
+    public Tab getCurrentWeatherTab() {
+        return currentWeatherTab;
+    }
+
+    public VBox getDailyForecastVBox() {
+        return dailyForecastVBox;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         typeCityTextField.setFocusTraversable(false);
         deleteCityButton.setFocusTraversable(false);
+
+        viewManager.initializeWeatherLayout(weatherData, this.currentWeatherTab, new CurrentWeatherPaneController(viewManager));
+
     }
 }

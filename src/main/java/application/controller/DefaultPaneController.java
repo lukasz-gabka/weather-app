@@ -36,7 +36,7 @@ public class DefaultPaneController extends BaseController implements Initializab
                 if (object.getErrorMessage() == null) {
                     String fullCityName = object.getFullCityName();
 
-                    viewManager.changeLayout(scene, this, new WeatherPaneController(viewManager, fullCityName));
+                    viewManager.changeLayout(scene, this, new WeatherPaneController(viewManager, fullCityName, object));
                 } else {
                     errorLabel.setText(object.getErrorMessage());
                 }
