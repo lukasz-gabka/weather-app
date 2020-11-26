@@ -4,10 +4,7 @@ import application.view.ViewManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,6 +21,9 @@ public class WeatherPaneController extends BaseController implements Initializab
     private Button deleteCityButton;
 
     @FXML
+    private TabPane weatherTabPane;
+
+    @FXML
     private Tab currentWeatherTab;
 
     @FXML
@@ -32,17 +32,21 @@ public class WeatherPaneController extends BaseController implements Initializab
     @FXML
     void deleteCityAction() {
         Scene scene = typeCityTextField.getScene();
-        String id = typeCityTextField.getId();
 
-        viewManager.addLayoutToScene(new DefaultPaneController(viewManager), scene, "", id);
+        viewManager.changeLayout(scene, this, new DefaultPaneController(viewManager));
     }
 
-    public WeatherPaneController(ViewManager viewManager) {
+    public WeatherPaneController(ViewManager viewManager, String text) {
         super(viewManager, "WeatherPane.fxml");
+        typeCityTextField.setText(text);
     }
 
     public void setTypeCityTextField(String text) {
         typeCityTextField.setText(text);
+    }
+
+    public TabPane getWeatherTabPane() {
+        return weatherTabPane;
     }
 
     @Override

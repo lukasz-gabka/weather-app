@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,7 +27,6 @@ public class DefaultPaneController extends BaseController implements Initializab
 
         Scene scene = errorLabel.getScene();
         String textFromField = typeCityTextField.getText();
-        String id = typeCityTextField.getId();
         WeatherData weatherData = new WeatherData();
 
         Thread thread = new Thread(() -> {
@@ -36,7 +36,7 @@ public class DefaultPaneController extends BaseController implements Initializab
                 if (object.getErrorMessage() == null) {
                     String fullCityName = object.getFullCityName();
 
-                    viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, fullCityName, id);
+                    viewManager.changeLayout(scene, this, new WeatherPaneController(viewManager, fullCityName));
                 } else {
                     errorLabel.setText(object.getErrorMessage());
                 }
