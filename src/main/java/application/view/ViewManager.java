@@ -1,9 +1,9 @@
 package application.view;
 
 import application.controller.BaseController;
+import application.controller.CurrentWeatherPaneController;
 import application.controller.DefaultPaneController;
 import application.controller.MainWindowController;
-import application.model.JSONParsedObjects.MainJSONObject;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -37,8 +37,8 @@ public class ViewManager {
         hBox.getChildren().add(index, newParent);
     }
 
-    public void initializeWeatherLayout(MainJSONObject object, Tab tab, BaseController currentWeatherController) {
-        Parent currentWeatherParent = currentWeatherController.getParent();
-        tab.setContent(currentWeatherParent);
+    public void initializeWeatherLayout(Tab tab, CurrentWeatherPaneController currentWeatherController) {
+        Parent parent = currentWeatherController.getParent();
+        tab.setContent(parent);
     }
 }

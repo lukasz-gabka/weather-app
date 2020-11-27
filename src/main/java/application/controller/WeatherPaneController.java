@@ -12,8 +12,6 @@ import java.util.ResourceBundle;
 
 public class WeatherPaneController extends BaseController implements Initializable {
 
-    private MainJSONObject weatherData;
-
     @FXML
     private TextField typeCityTextField;
 
@@ -39,30 +37,21 @@ public class WeatherPaneController extends BaseController implements Initializab
         viewManager.changeLayout(scene, this, new DefaultPaneController(viewManager));
     }
 
-    public WeatherPaneController(ViewManager viewManager, String text, MainJSONObject weatherData) {
+    public WeatherPaneController(ViewManager viewManager, String cityName, MainJSONObject weatherData) {
         super(viewManager, "WeatherPane.fxml");
-        this.weatherData = weatherData;
-        typeCityTextField.setText(weatherData.getFullCityName());
+
+        typeCityTextField.setText(cityName);
+
+        viewManager.initializeWeatherLayout(this.currentWeatherTab, new CurrentWeatherPaneController(viewManager, weatherData));
     }
 
     public void setTypeCityTextField(String text) {
         typeCityTextField.setText(text);
     }
 
-    public Tab getCurrentWeatherTab() {
-        return currentWeatherTab;
-    }
-
-    public VBox getDailyForecastVBox() {
-        return dailyForecastVBox;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         typeCityTextField.setFocusTraversable(false);
         deleteCityButton.setFocusTraversable(false);
-
-        viewManager.initializeWeatherLayout(weatherData, this.currentWeatherTab, new CurrentWeatherPaneController(viewManager));
-
     }
 }

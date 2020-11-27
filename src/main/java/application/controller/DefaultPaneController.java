@@ -30,7 +30,7 @@ public class DefaultPaneController extends BaseController implements Initializab
         WeatherData weatherData = new WeatherData();
 
         Thread thread = new Thread(() -> {
-            MainJSONObject object = weatherData.getWeatherData(textFromField, weatherData.DAILY_FORECAST_URL);
+            MainJSONObject object = weatherData.getWeatherData(textFromField, weatherData.CURRENT_WEATHER_URL);
 
             Platform.runLater(() -> {
                 if (object.getErrorMessage() == null) {
@@ -42,7 +42,6 @@ public class DefaultPaneController extends BaseController implements Initializab
                 }
             });
         });
-
         thread.start();
     }
 
