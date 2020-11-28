@@ -10,7 +10,7 @@ public class DataJSONObject {
     private String datetime;
     private float temp;
     private float wind_spd;
-    private float wind_dir;
+    private double wind_dir;
     private float app_temp;
     private float rh;
 
@@ -47,7 +47,7 @@ public class DataJSONObject {
         return Math.round(wind_spd * 3.6f);
     }
 
-    public int getWind_dir() {
+    public double getWind_dir() {
         return Math.round(wind_dir);
     }
 

@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 public class CurrentWeatherPaneController extends BaseController {
 
     private final String DEGREE_CELCIUS = "\u00B0C";
-    private final String PATH_TO_ICONS = "/icons/";
+    private final String PATH_TO_ICONS = "/images/icons/";
 
     @FXML
     private ImageView weatherImageView;
@@ -36,10 +36,10 @@ public class CurrentWeatherPaneController extends BaseController {
     private Label humidityLabel;
 
     @FXML
-    private Label windSpeedLabel;
+    private ImageView arrowImageView;
 
     @FXML
-    private Label windDirectionLabel;
+    private Label windSpeedLabel;
 
     public CurrentWeatherPaneController(ViewManager viewManager, MainJSONObject weatherData) {
         super(viewManager, "CurrentWeatherPane.fxml");
@@ -59,7 +59,7 @@ public class CurrentWeatherPaneController extends BaseController {
         String appTemperature = Integer.toString(dataObject.getApp_temp()) + DEGREE_CELCIUS;
         String humidity = Integer.toString(dataObject.getRh()) + "%";
         String windSpeed = Integer.toString(dataObject.getWind_spd()) + " m/s";
-        String windDirection = Integer.toString(dataObject.getWind_dir());
+        double windDirection = dataObject.getWind_dir();
 
         Image image = new Image(iconPath);
         weatherImageView.setImage(image);
@@ -71,6 +71,6 @@ public class CurrentWeatherPaneController extends BaseController {
         appTemperatureLabel.setText(appTemperature);
         humidityLabel.setText(humidity);
         windSpeedLabel.setText(windSpeed);
-        windDirectionLabel.setText(windDirection);
+        arrowImageView.setRotate(windDirection);
     }
 }

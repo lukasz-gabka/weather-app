@@ -9,5 +9,5 @@ module weather.app {
 
     opens application;
     opens application.controller;
-    opens icons;
+    opens images.icons;
 }

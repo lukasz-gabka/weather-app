@@ -101,14 +101,6 @@
             <Insets bottom="5.0" />
          </padding>
       </Label>
-      <Label fx:id="windDirectionLabel" alignment="CENTER" layoutX="167.0" layoutY="243.0" prefHeight="19.0" prefWidth="145.0" text="południowo-zachodni">
-         <font>
-            <Font size="13.0" />
-         </font>
-         <padding>
-            <Insets bottom="5.0" />
-         </padding>
-      </Label>
       <Label alignment="CENTER" layoutX="11.0" layoutY="243.0" prefHeight="19.0" prefWidth="153.0" text="Kierunek wiatru:">
          <font>
             <Font size="13.0" />
@@ -117,5 +109,10 @@
             <Insets bottom="5.0" />
          </padding>
       </Label>
+      <ImageView fx:id="arrowImageView" fitHeight="25.0" fitWidth="25.0" layoutX="227.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/arrow.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
