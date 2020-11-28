@@ -9,10 +9,7 @@
 
 <AnchorPane prefHeight="293.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="WeatherImageView" fitHeight="100.0" fitWidth="100.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/test_image.jpg" />
-         </image>
+      <ImageView fx:id="weatherImageView" fitHeight="100.0" fitWidth="100.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
       <Label fx:id="temperatureLabel" alignment="CENTER" layoutX="116.0" layoutY="14.0" prefHeight="49.0" prefWidth="203.0" text="99 oC">
          <font>

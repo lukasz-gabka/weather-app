@@ -6,14 +6,16 @@ import application.model.JSONParsedObjects.WeatherJSONObject;
 import application.view.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class CurrentWeatherPaneController extends BaseController {
 
     private final String DEGREE_CELCIUS = "\u00B0C";
+    private final String PATH_TO_ICONS = "/icons/";
 
     @FXML
-    private ImageView WeatherImageView;
+    private ImageView weatherImageView;
 
     @FXML
     private Label temperatureLabel;
@@ -49,7 +51,7 @@ public class CurrentWeatherPaneController extends BaseController {
         DataJSONObject dataObject = object.getData().get(0);
         WeatherJSONObject weatherObject = dataObject.getWeather();
 
-        //weatherImageView.setImage();
+        String iconPath = PATH_TO_ICONS + weatherObject.getIcon() + ".png";
         String temperature = Integer.toString(dataObject.getTemp()) + DEGREE_CELCIUS;
         String description = weatherObject.getDescription();
         String pressure = Integer.toString(dataObject.getPres()) + " hPa";
@@ -58,6 +60,9 @@ public class CurrentWeatherPaneController extends BaseController {
         String humidity = Integer.toString(dataObject.getRh()) + "%";
         String windSpeed = Integer.toString(dataObject.getWind_spd()) + " m/s";
         String windDirection = Integer.toString(dataObject.getWind_dir());
+
+        Image image = new Image(iconPath);
+        weatherImageView.setImage(image);
 
         temperatureLabel.setText(temperature);
         descriptionLabel.setText(description);
