@@ -37,12 +37,12 @@ public class WeatherPaneController extends BaseController implements Initializab
         viewManager.changeLayout(scene, this, new DefaultPaneController(viewManager));
     }
 
-    public WeatherPaneController(ViewManager viewManager, String cityName, MainJSONObject weatherData) {
+    public WeatherPaneController(ViewManager viewManager, String cityName, MainJSONObject currentWeatherData, MainJSONObject dailyForecastData) {
         super(viewManager, "WeatherPane.fxml");
 
         typeCityTextField.setText(cityName);
 
-        viewManager.initializeWeatherLayout(this.currentWeatherTab, new CurrentWeatherPaneController(viewManager, weatherData));
+        viewManager.initializeWeatherLayout(this.currentWeatherTab, new CurrentWeatherPaneController(viewManager, currentWeatherData));
     }
 
     public void setTypeCityTextField(String text) {

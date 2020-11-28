@@ -10,8 +10,10 @@ import javafx.scene.image.ImageView;
 
 public class CurrentWeatherPaneController extends BaseController {
 
+    private final String DEGREE_CELCIUS = "\u00B0C";
+
     @FXML
-    private ImageView weatherImageView;
+    private ImageView WeatherImageView;
 
     @FXML
     private Label temperatureLabel;
@@ -25,6 +27,18 @@ public class CurrentWeatherPaneController extends BaseController {
     @FXML
     private Label cloudsLabel;
 
+    @FXML
+    private Label appTemperatureLabel;
+
+    @FXML
+    private Label humidityLabel;
+
+    @FXML
+    private Label windSpeedLabel;
+
+    @FXML
+    private Label windDirectionLabel;
+
     public CurrentWeatherPaneController(ViewManager viewManager, MainJSONObject weatherData) {
         super(viewManager, "CurrentWeatherPane.fxml");
 
@@ -36,14 +50,22 @@ public class CurrentWeatherPaneController extends BaseController {
         WeatherJSONObject weatherObject = dataObject.getWeather();
 
         //weatherImageView.setImage();
-        String temperature = Float.toString(dataObject.getTemp());
+        String temperature = Integer.toString(dataObject.getTemp()) + DEGREE_CELCIUS;
         String description = weatherObject.getDescription();
-        String pressure = Float.toString(dataObject.getPres());
-        String clouds = Integer.toString(dataObject.getClouds());
+        String pressure = Integer.toString(dataObject.getPres()) + " hPa";
+        String clouds = Integer.toString(dataObject.getClouds()) + "%";
+        String appTemperature = Integer.toString(dataObject.getApp_temp()) + DEGREE_CELCIUS;
+        String humidity = Integer.toString(dataObject.getRh()) + "%";
+        String windSpeed = Integer.toString(dataObject.getWind_spd()) + " m/s";
+        String windDirection = Integer.toString(dataObject.getWind_dir());
 
         temperatureLabel.setText(temperature);
         descriptionLabel.setText(description);
         pressureLabel.setText(pressure);
         cloudsLabel.setText(clouds);
+        appTemperatureLabel.setText(appTemperature);
+        humidityLabel.setText(humidity);
+        windSpeedLabel.setText(windSpeed);
+        windDirectionLabel.setText(windDirection);
     }
 }

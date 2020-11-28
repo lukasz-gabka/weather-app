@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="179.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="293.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="WeatherImageView" fitHeight="100.0" fitWidth="100.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -23,15 +24,101 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Label fx:id="pressureLabel" alignment="CENTER" layoutX="13.0" layoutY="130.0" prefHeight="17.0" prefWidth="306.0" text="Ciśnienie: 1014,06 hPa">
+      <Label fx:id="pressureLabel" alignment="CENTER" layoutX="169.0" layoutY="147.0" prefHeight="19.0" prefWidth="145.0" text="1014,06 hPa">
          <font>
             <Font size="13.0" />
          </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
       </Label>
-      <Label fx:id="cloudsLabel" alignment="CENTER" layoutX="13.0" layoutY="155.0" prefHeight="17.0" prefWidth="306.0" text="Zachmurzenie: 35%">
+      <Label fx:id="cloudsLabel" alignment="CENTER" layoutX="167.0" layoutY="171.0" prefHeight="19.0" prefWidth="145.0" text="35%">
          <font>
             <Font size="13.0" />
          </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Label alignment="CENTER" layoutX="13.0" layoutY="147.0" prefHeight="19.0" prefWidth="153.0" text="Ciśnienie:">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Label alignment="CENTER" layoutX="11.0" layoutY="171.0" prefHeight="19.0" prefWidth="153.0" text="Zachmurzenie:">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Label fx:id="appTemperatureLabel" alignment="CENTER" layoutX="166.0" layoutY="123.0" prefHeight="19.0" prefWidth="145.0" text="99 oC">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Label alignment="TOP_RIGHT" contentDisplay="CENTER" layoutX="10.0" layoutY="123.0" prefHeight="19.0" prefWidth="153.0" text="Temperatura odczuwalna:">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Label fx:id="humidityLabel" alignment="CENTER" layoutX="167.0" layoutY="195.0" prefHeight="19.0" prefWidth="145.0" text="35%">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Label alignment="CENTER" layoutX="11.0" layoutY="195.0" prefHeight="19.0" prefWidth="153.0" text="Wilgotność:">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Label fx:id="windSpeedLabel" alignment="CENTER" layoutX="167.0" layoutY="219.0" prefHeight="19.0" prefWidth="145.0" text="99 km/h">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Label alignment="CENTER" layoutX="11.0" layoutY="219.0" prefHeight="19.0" prefWidth="153.0" text="Prędkość wiatru:">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Label fx:id="windDirectionLabel" alignment="CENTER" layoutX="167.0" layoutY="243.0" prefHeight="19.0" prefWidth="145.0" text="południowo-zachodni">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Label alignment="CENTER" layoutX="11.0" layoutY="243.0" prefHeight="19.0" prefWidth="153.0" text="Kierunek wiatru:">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
       </Label>
    </children>
 </AnchorPane>
