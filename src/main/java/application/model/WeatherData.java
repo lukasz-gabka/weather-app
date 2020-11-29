@@ -8,7 +8,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 public class WeatherData {
     public final String CURRENT_WEATHER_URL = "http://api.weatherbit.io/v2.0/current?lang=pl";
-    public final String DAILY_FORECAST_URL = "http://api.weatherbit.io/v2.0/forecast/daily?lang=pl&days=5";
+    public final String DAILY_FORECAST_URL = "http://api.weatherbit.io/v2.0/forecast/daily?lang=pl&days=6";
     private final String API_URL = "&key="; //insert your weatherbit.io api key at the end of this string
     private final String CITY_URL = "&city=";
 

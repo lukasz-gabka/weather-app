@@ -19,6 +19,10 @@ public class MainJSONObject {
         }
     }
 
+    public String getFullCityName() {
+        return city_name + ", " + country_code;
+    }
+
     public String getCity_name() {
         return city_name;
     }

@@ -5,12 +5,17 @@ public class DataJSONObject {
     private float pres;
     private String country_code;
     private String city_name;
-    private int clouds;
+    private float clouds;
     private WeatherJSONObject weather;
+    private String datetime;
     private float temp;
+    private float wind_spd;
+    private double wind_dir;
+    private float app_temp;
+    private float rh;
 
-    public float getPres() {
-        return pres;
+    public int getPres() {
+        return roundFloatToInt(pres);
     }
 
     public String getCountry_code() {
@@ -22,14 +27,39 @@ public class DataJSONObject {
     }
 
     public int getClouds() {
-        return clouds;
+        return Math.round(clouds);
     }
 
     public WeatherJSONObject getWeather() {
         return weather;
     }
 
-    public float getTemp() {
-        return temp;
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public int getTemp() {
+        return Math.round(temp);
+    }
+
+    public int getWind_spd() {
+        //converts "m/s" into "km/h"
+        return Math.round(wind_spd * 3.6f);
+    }
+
+    public double getWind_dir() {
+        return Math.round(wind_dir);
+    }
+
+    public int getApp_temp() {
+        return Math.round(app_temp);
+    }
+
+    public int getRh() {
+        return Math.round(rh);
+    }
+
+    private int roundFloatToInt(float number) {
+        return Math.round(number);
     }
 }

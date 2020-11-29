@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,26 +22,32 @@ public class DefaultPaneController extends BaseController implements Initializab
     private Label errorLabel;
 
     @FXML
-    void typeCityAction() {
+    void typeCityAction() throws InterruptedException{
         errorLabel.setText("");
 
         Scene scene = errorLabel.getScene();
         String textFromField = typeCityTextField.getText();
-        String id = typeCityTextField.getId();
         WeatherData weatherData = new WeatherData();
 
         Thread thread = new Thread(() -> {
-            MainJSONObject object = weatherData.getWeatherData(textFromField, weatherData.CURRENT_WEATHER_URL);
+            MainJSONObject currentWeatherData = weatherData.getWeatherData(textFromField, weatherData.CURRENT_WEATHER_URL);
+            try {
+                Thread.sleep(1000); // weatherbit.io API free version enables only 1 request per second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MainJSONObject dailyForecastData = weatherData.getWeatherData(textFromField, weatherData.DAILY_FORECAST_URL);
 
             Platform.runLater(() -> {
-                if (object.getErrorMessage() == null) {
-                        viewManager.addLayoutToScene(new WeatherPaneController(viewManager), scene, textFromField, id);
+                if (currentWeatherData.getErrorMessage() == null) {
+                    String fullCityName = dailyForecastData.getFullCityName();
+
+                    viewManager.changeLayout(scene, this, new WeatherPaneController(viewManager, fullCityName, currentWeatherData, dailyForecastData));
                 } else {
-                        errorLabel.setText(object.getErrorMessage());
+                    errorLabel.setText(currentWeatherData.getErrorMessage());
                 }
             });
         });
-
         thread.start();
     }
 
