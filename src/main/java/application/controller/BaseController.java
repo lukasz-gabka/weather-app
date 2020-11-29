@@ -3,7 +3,6 @@ package application.controller;
 import application.view.ViewManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.TabPane;
 
 import java.io.IOException;
 
@@ -25,16 +24,6 @@ public abstract class BaseController {
         } catch(IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setTypeCityTextField(String text) {}
-
-    public TabPane getWeatherTabPane() {
-        return null;
-    }
-
-    public String getFxmlName() {
-        return fxmlName;
     }
 
     public Parent getParent() {

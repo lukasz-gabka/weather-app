@@ -22,7 +22,7 @@ public class DefaultPaneController extends BaseController implements Initializab
     private Label errorLabel;
 
     @FXML
-    void typeCityAction() {
+    void typeCityAction() throws InterruptedException{
         errorLabel.setText("");
 
         Scene scene = errorLabel.getScene();
@@ -31,6 +31,11 @@ public class DefaultPaneController extends BaseController implements Initializab
 
         Thread thread = new Thread(() -> {
             MainJSONObject currentWeatherData = weatherData.getWeatherData(textFromField, weatherData.CURRENT_WEATHER_URL);
+            try {
+                Thread.sleep(1000); // weatherbit.io API free version enables only 1 request per second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             MainJSONObject dailyForecastData = weatherData.getWeatherData(textFromField, weatherData.DAILY_FORECAST_URL);
 
             Platform.runLater(() -> {

@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class CurrentWeatherPaneController extends BaseController {
+public class DailyForecastController extends BaseController {
 
     private final String DEGREE_CELCIUS = "\u00B0C";
     private final String PATH_TO_ICONS = "/images/icons/";
@@ -30,24 +30,23 @@ public class CurrentWeatherPaneController extends BaseController {
     private Label cloudsLabel;
 
     @FXML
-    private Label appTemperatureLabel;
+    private Label humidityLabel;
 
     @FXML
-    private Label humidityLabel;
+    private Label windSpeedLabel;
 
     @FXML
     private ImageView arrowImageView;
 
     @FXML
-    private Label windSpeedLabel;
+    private Label dateLabel;
 
-    public CurrentWeatherPaneController(ViewManager viewManager, MainJSONObject weatherData) {
-        super(viewManager, "CurrentWeatherPane.fxml");
+    public DailyForecastController(ViewManager viewManager, MainJSONObject weatherData) {
+        super(viewManager, "DailyForecastPane.fxml");
 
-        setDataToWeatherLayout(weatherData);
     }
 
-    private void setDataToWeatherLayout(MainJSONObject object) {
+    public void setDataToWeatherLayout(MainJSONObject object) {
         DataJSONObject dataObject = object.getData().get(0);
         WeatherJSONObject weatherObject = dataObject.getWeather();
 
@@ -56,7 +55,6 @@ public class CurrentWeatherPaneController extends BaseController {
         String description = weatherObject.getDescription();
         String pressure = dataObject.getPres() + " hPa";
         String clouds = dataObject.getClouds() + "%";
-        String appTemperature = dataObject.getApp_temp() + DEGREE_CELCIUS;
         String humidity = dataObject.getRh() + "%";
         String windSpeed = dataObject.getWind_spd() + " m/s";
         double windDirection = dataObject.getWind_dir();
@@ -67,7 +65,6 @@ public class CurrentWeatherPaneController extends BaseController {
         descriptionLabel.setText(description);
         pressureLabel.setText(pressure);
         cloudsLabel.setText(clouds);
-        appTemperatureLabel.setText(appTemperature);
         humidityLabel.setText(humidity);
         windSpeedLabel.setText(windSpeed);
         arrowImageView.setRotate(windDirection);
