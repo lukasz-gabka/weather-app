@@ -28,6 +28,9 @@ public class WeatherPaneController extends BaseController implements Initializab
     private Tab currentWeatherTab;
 
     @FXML
+    private ScrollPane weatherScrollPane;
+
+    @FXML
     private VBox dailyForecastVBox;
 
     @FXML
@@ -42,7 +45,12 @@ public class WeatherPaneController extends BaseController implements Initializab
 
         typeCityTextField.setText(cityName);
 
-        viewManager.initializeWeatherLayout(this.currentWeatherTab, new CurrentWeatherPaneController(viewManager, currentWeatherData));
+        viewManager.initializeCurrentWeatherLayout(this.currentWeatherTab, new CurrentWeatherPaneController(viewManager, currentWeatherData));
+
+        int dailyForecastDataLength = dailyForecastData.getData().size();
+        for (int i = 1; i <= dailyForecastDataLength - 1; i++) {
+            viewManager.initializeDailyForecastLayout(this.dailyForecastVBox, new DailyForecastController(viewManager, dailyForecastData, i), i - 1);
+        }
     }
 
     public void setTypeCityTextField(String text) {
@@ -53,5 +61,6 @@ public class WeatherPaneController extends BaseController implements Initializab
     public void initialize(URL url, ResourceBundle resourceBundle) {
         typeCityTextField.setFocusTraversable(false);
         deleteCityButton.setFocusTraversable(false);
+        weatherScrollPane.setFitToWidth(true);
     }
 }

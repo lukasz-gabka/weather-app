@@ -1,13 +1,11 @@
 package application.view;
 
-import application.controller.BaseController;
-import application.controller.CurrentWeatherPaneController;
-import application.controller.DefaultPaneController;
-import application.controller.MainWindowController;
+import application.controller.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class ViewManager {
 
@@ -37,8 +35,13 @@ public class ViewManager {
         hBox.getChildren().add(index, newParent);
     }
 
-    public void initializeWeatherLayout(Tab tab, CurrentWeatherPaneController currentWeatherController) {
+    public void initializeCurrentWeatherLayout(Tab tab, CurrentWeatherPaneController currentWeatherController) {
         Parent parent = currentWeatherController.getParent();
         tab.setContent(parent);
+    }
+
+    public void initializeDailyForecastLayout(VBox vBox, DailyForecastController dailyForecastController, int index) {
+        Parent parent = dailyForecastController.getParent();
+        vBox.getChildren().add(index, parent);
     }
 }

@@ -41,13 +41,14 @@ public class DailyForecastController extends BaseController {
     @FXML
     private Label dateLabel;
 
-    public DailyForecastController(ViewManager viewManager, MainJSONObject weatherData) {
+    public DailyForecastController(ViewManager viewManager, MainJSONObject weatherData, int index) {
         super(viewManager, "DailyForecastPane.fxml");
 
+        setDataToWeatherLayout(weatherData, index);
     }
 
-    public void setDataToWeatherLayout(MainJSONObject object) {
-        DataJSONObject dataObject = object.getData().get(0);
+    public void setDataToWeatherLayout(MainJSONObject object, int index) {
+        DataJSONObject dataObject = object.getData().get(index);
         WeatherJSONObject weatherObject = dataObject.getWeather();
 
         String iconPath = PATH_TO_ICONS + weatherObject.getIcon() + ".png";
@@ -56,9 +57,10 @@ public class DailyForecastController extends BaseController {
         String pressure = dataObject.getPres() + " hPa";
         String clouds = dataObject.getClouds() + "%";
         String humidity = dataObject.getRh() + "%";
-        String windSpeed = dataObject.getWind_spd() + " m/s";
+        String windSpeed = dataObject.getWind_spd() + " km/h";
         double windDirection = dataObject.getWind_dir();
         Image image = new Image(iconPath);
+        String datetime = dataObject.getDatetime();
 
         weatherImageView.setImage(image);
         temperatureLabel.setText(temperature);
@@ -68,5 +70,6 @@ public class DailyForecastController extends BaseController {
         humidityLabel.setText(humidity);
         windSpeedLabel.setText(windSpeed);
         arrowImageView.setRotate(windDirection);
+        dateLabel.setText(datetime);
     }
 }

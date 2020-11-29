@@ -7,21 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="293.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DailyForecastController">
+<AnchorPane prefHeight="293.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="weatherImageView" fitHeight="100.0" fitWidth="100.0" layoutX="12.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
-      <Label fx:id="temperatureLabel" alignment="CENTER" layoutX="114.0" layoutY="49.0" prefHeight="49.0" prefWidth="203.0" text="99 oC">
+      <Label fx:id="temperatureLabel" alignment="CENTER" layoutX="114.0" layoutY="49.0" prefHeight="49.0" prefWidth="203.0">
          <font>
             <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <Label fx:id="descriptionLabel" alignment="CENTER" layoutX="116.0" layoutY="119.0" prefHeight="30.0" prefWidth="203.0" text="niewielkie opady deszczu" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="descriptionLabel" alignment="CENTER" layoutX="116.0" layoutY="119.0" prefHeight="30.0" prefWidth="203.0" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label fx:id="pressureLabel" alignment="CENTER" layoutX="167.0" layoutY="159.0" prefHeight="19.0" prefWidth="145.0" text="1014,06 hPa">
+      <Label fx:id="pressureLabel" alignment="CENTER" layoutX="167.0" layoutY="159.0" prefHeight="19.0" prefWidth="145.0">
          <font>
             <Font size="13.0" />
          </font>
@@ -29,7 +29,7 @@
             <Insets bottom="5.0" />
          </padding>
       </Label>
-      <Label fx:id="cloudsLabel" alignment="CENTER" layoutX="165.0" layoutY="183.0" prefHeight="19.0" prefWidth="145.0" text="35%">
+      <Label fx:id="cloudsLabel" alignment="CENTER" layoutX="165.0" layoutY="183.0" prefHeight="19.0" prefWidth="145.0">
          <font>
             <Font size="13.0" />
          </font>
@@ -53,7 +53,7 @@
             <Insets bottom="5.0" />
          </padding>
       </Label>
-      <Label fx:id="humidityLabel" alignment="CENTER" layoutX="165.0" layoutY="207.0" prefHeight="19.0" prefWidth="145.0" text="35%">
+      <Label fx:id="humidityLabel" alignment="CENTER" layoutX="165.0" layoutY="207.0" prefHeight="19.0" prefWidth="145.0">
          <font>
             <Font size="13.0" />
          </font>
@@ -69,7 +69,7 @@
             <Insets bottom="5.0" />
          </padding>
       </Label>
-      <Label fx:id="windSpeedLabel" alignment="CENTER" layoutX="165.0" layoutY="231.0" prefHeight="19.0" prefWidth="145.0" text="99 km/h">
+      <Label fx:id="windSpeedLabel" alignment="CENTER" layoutX="165.0" layoutY="231.0" prefHeight="19.0" prefWidth="145.0">
          <font>
             <Font size="13.0" />
          </font>
@@ -98,7 +98,7 @@
             <Image url="@images/arrow.png" />
          </image>
       </ImageView>
-      <Label fx:id="dateLabel" alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="30.0" prefWidth="309.0" text="2020-11-29" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="dateLabel" alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="30.0" prefWidth="309.0" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

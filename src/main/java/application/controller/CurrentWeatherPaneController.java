@@ -58,7 +58,7 @@ public class CurrentWeatherPaneController extends BaseController {
         String clouds = dataObject.getClouds() + "%";
         String appTemperature = dataObject.getApp_temp() + DEGREE_CELCIUS;
         String humidity = dataObject.getRh() + "%";
-        String windSpeed = dataObject.getWind_spd() + " m/s";
+        String windSpeed = dataObject.getWind_spd() + " km/h";
         double windDirection = dataObject.getWind_dir();
         Image image = new Image(iconPath);
 
