@@ -9,9 +9,9 @@ import javafx.scene.layout.VBox;
 
 public class ViewManager {
 
-    public HBox initializeMainLayoutOnStartup() {
-        MainWindowController mainWindowController = new MainWindowController(this);
-        HBox hBox = (HBox) mainWindowController.getParent();
+    public HBox initializeMainLayout() {
+        MainPaneController mainPaneController = new MainPaneController(this);
+        HBox hBox = (HBox) mainPaneController.getParent();
 
         DefaultPaneController defaultLeftPaneController = new DefaultPaneController(this);
         Parent leftParent = defaultLeftPaneController.getParent();
@@ -35,13 +35,13 @@ public class ViewManager {
         hBox.getChildren().add(index, newParent);
     }
 
-    public void initializeCurrentWeatherLayout(Tab tab, CurrentWeatherPaneController currentWeatherController) {
-        Parent parent = currentWeatherController.getParent();
+    public void initializeCurrentWeatherLayout(Tab tab, BaseController controller) {
+        Parent parent = controller.getParent();
         tab.setContent(parent);
     }
 
-    public void initializeDailyForecastLayout(VBox vBox, DailyForecastController dailyForecastController, int index) {
-        Parent parent = dailyForecastController.getParent();
+    public void initializeDailyForecastLayout(VBox vBox, BaseController controller, int index) {
+        Parent parent = controller.getParent();
         vBox.getChildren().add(index, parent);
     }
 }

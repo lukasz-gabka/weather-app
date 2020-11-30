@@ -1,12 +1,12 @@
 package application.model.JSONParsedObjects;
 
-public class DataJSONObject {
+public class DataJSON {
 
     private float pres;
     private String country_code;
     private String city_name;
     private float clouds;
-    private WeatherJSONObject weather;
+    private WeatherJSON weather;
     private String datetime;
     private float temp;
     private float wind_spd;
@@ -30,7 +30,7 @@ public class DataJSONObject {
         return Math.round(clouds);
     }
 
-    public WeatherJSONObject getWeather() {
+    public WeatherJSON getWeather() {
         return weather;
     }
 
@@ -43,8 +43,7 @@ public class DataJSONObject {
     }
 
     public int getWind_spd() {
-        //converts "m/s" into "km/h"
-        return Math.round(wind_spd * 3.6f);
+        return Math.round(wind_spd * 3.6f); //converts "m/s" into "km/h"
     }
 
     public double getWind_dir() {

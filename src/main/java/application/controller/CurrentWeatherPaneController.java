@@ -1,8 +1,8 @@
 package application.controller;
 
-import application.model.JSONParsedObjects.DataJSONObject;
-import application.model.JSONParsedObjects.MainJSONObject;
-import application.model.JSONParsedObjects.WeatherJSONObject;
+import application.model.JSONParsedObjects.DataJSON;
+import application.model.JSONParsedObjects.MainJSON;
+import application.model.JSONParsedObjects.WeatherJSON;
 import application.view.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -41,15 +41,15 @@ public class CurrentWeatherPaneController extends BaseController {
     @FXML
     private Label windSpeedLabel;
 
-    public CurrentWeatherPaneController(ViewManager viewManager, MainJSONObject weatherData) {
+    public CurrentWeatherPaneController(ViewManager viewManager, MainJSON data) {
         super(viewManager, "CurrentWeatherPane.fxml");
 
-        setDataToWeatherLayout(weatherData);
+        setDataToWeatherLayout(data);
     }
 
-    private void setDataToWeatherLayout(MainJSONObject object) {
-        DataJSONObject dataObject = object.getData().get(0);
-        WeatherJSONObject weatherObject = dataObject.getWeather();
+    private void setDataToWeatherLayout(MainJSON data) {
+        DataJSON dataObject = data.getData().get(0);
+        WeatherJSON weatherObject = dataObject.getWeather();
 
         String iconPath = PATH_TO_ICONS + weatherObject.getIcon() + ".png";
         String temperature = dataObject.getTemp() + DEGREE_CELCIUS;

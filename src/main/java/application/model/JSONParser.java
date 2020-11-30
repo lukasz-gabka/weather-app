@@ -1,6 +1,6 @@
 package application.model;
 
-import application.model.JSONParsedObjects.MainJSONObject;
+import application.model.JSONParsedObjects.MainJSON;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,9 +14,9 @@ public class JSONParser {
         return EntityUtils.toString(entity);
     }
 
-    public static MainJSONObject convertStringToObject(String json) {
+    public static MainJSON convertStringToObject(String json) {
         Gson gson = new Gson();
 
-        return gson.fromJson(json, MainJSONObject.class);
+        return gson.fromJson(json, MainJSON.class);
     }
 }

@@ -1,6 +1,6 @@
 package application.model;
 
-import application.model.JSONParsedObjects.MainJSONObject;
+import application.model.JSONParsedObjects.MainJSON;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -12,7 +12,7 @@ public class WeatherData {
     private final String API_URL = "&key="; //insert your weatherbit.io api key at the end of this string
     private final String CITY_URL = "&city=";
 
-    public MainJSONObject getWeatherData(String cityName, String baseUrl) {
+    public MainJSON getWeatherData(String cityName, String baseUrl) {
         HttpClient client = HttpClientBuilder.create().build();
         String url = baseUrl + API_URL + CITY_URL + convertSpaceToDash(cityName);
         HttpGet request = new HttpGet(url);
@@ -22,31 +22,31 @@ public class WeatherData {
 
             String result = JSONParser.convertJSONToString(httpResult);
 
-            MainJSONObject mainObject = JSONParser.convertStringToObject(result);
-            mainObject.isExist();
+            MainJSON data = JSONParser.convertStringToObject(result);
+            data.isExist();
 
-            return mainObject;
+            return data;
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
 
-            MainJSONObject mainObject = new MainJSONObject();
-            mainObject.setErrorMessage("Nie znaleziono podanej miejscowości.");
+            MainJSON data = new MainJSON();
+            data.setErrorMessage("Nie znaleziono podanej miejscowości.");
 
-            return mainObject;
+            return data;
         } catch (NullPointerException e) {
             e.printStackTrace();
 
-            MainJSONObject mainObject = new MainJSONObject();
-            mainObject.setErrorMessage("Błąd serwera. Spróbuj ponownie później.");
+            MainJSON data = new MainJSON();
+            data.setErrorMessage("Błąd serwera. Spróbuj ponownie później.");
 
-            return mainObject;
+            return data;
         } catch (Exception e) {
             e.printStackTrace();
 
-            MainJSONObject mainObject = new MainJSONObject();
-            mainObject.setErrorMessage("Nieznany błąd");
+            MainJSON data = new MainJSON();
+            data.setErrorMessage("Nieznany błąd");
 
-            return mainObject;
+            return data;
         }
     }
 

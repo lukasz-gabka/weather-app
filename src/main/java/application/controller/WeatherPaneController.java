@@ -1,16 +1,13 @@
 package application.controller;
 
-import application.model.JSONParsedObjects.MainJSONObject;
+import application.model.JSONParsedObjects.MainJSON;
 import application.view.ViewManager;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class WeatherPaneController extends BaseController implements Initializable {
+public class WeatherPaneController extends BaseController {
 
     @FXML
     private TextField typeCityTextField;
@@ -40,27 +37,20 @@ public class WeatherPaneController extends BaseController implements Initializab
         viewManager.changeLayout(scene, this, new DefaultPaneController(viewManager));
     }
 
-    public WeatherPaneController(ViewManager viewManager, String cityName, MainJSONObject currentWeatherData, MainJSONObject dailyForecastData) {
+    public WeatherPaneController(ViewManager viewManager, String cityName, MainJSON currentWeatherData, MainJSON dailyForecastData) {
         super(viewManager, "WeatherPane.fxml");
+
+        typeCityTextField.setFocusTraversable(false);
+        deleteCityButton.setFocusTraversable(false);
 
         typeCityTextField.setText(cityName);
 
         viewManager.initializeCurrentWeatherLayout(this.currentWeatherTab, new CurrentWeatherPaneController(viewManager, currentWeatherData));
 
-        int dailyForecastDataLength = dailyForecastData.getData().size();
-        for (int i = 1; i <= dailyForecastDataLength - 1; i++) {
-            viewManager.initializeDailyForecastLayout(this.dailyForecastVBox, new DailyForecastController(viewManager, dailyForecastData, i), i - 1);
+        int arrayLength = dailyForecastData.getData().size();
+
+        for (int i = 1; i <= arrayLength - 1; i++) {
+            viewManager.initializeDailyForecastLayout(this.dailyForecastVBox, new DailyForecastPaneController(viewManager, dailyForecastData, i), i - 1);
         }
-    }
-
-    public void setTypeCityTextField(String text) {
-        typeCityTextField.setText(text);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        typeCityTextField.setFocusTraversable(false);
-        deleteCityButton.setFocusTraversable(false);
-        weatherScrollPane.setFitToWidth(true);
     }
 }

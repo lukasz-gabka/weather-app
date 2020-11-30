@@ -1,6 +1,6 @@
 package application.model.JSONParsedObjects;
 
-public class WeatherJSONObject {
+public class WeatherJSON {
 
     private String icon;
     private String description;

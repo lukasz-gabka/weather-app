@@ -1,15 +1,15 @@
 package application.controller;
 
-import application.model.JSONParsedObjects.DataJSONObject;
-import application.model.JSONParsedObjects.MainJSONObject;
-import application.model.JSONParsedObjects.WeatherJSONObject;
+import application.model.JSONParsedObjects.DataJSON;
+import application.model.JSONParsedObjects.MainJSON;
+import application.model.JSONParsedObjects.WeatherJSON;
 import application.view.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class DailyForecastController extends BaseController {
+public class DailyForecastPaneController extends BaseController {
 
     private final String DEGREE_CELCIUS = "\u00B0C";
     private final String PATH_TO_ICONS = "/images/icons/";
@@ -41,15 +41,15 @@ public class DailyForecastController extends BaseController {
     @FXML
     private Label dateLabel;
 
-    public DailyForecastController(ViewManager viewManager, MainJSONObject weatherData, int index) {
+    public DailyForecastPaneController(ViewManager viewManager, MainJSON data, int index) {
         super(viewManager, "DailyForecastPane.fxml");
 
-        setDataToWeatherLayout(weatherData, index);
+        setDataToWeatherLayout(data, index);
     }
 
-    public void setDataToWeatherLayout(MainJSONObject object, int index) {
-        DataJSONObject dataObject = object.getData().get(index);
-        WeatherJSONObject weatherObject = dataObject.getWeather();
+    public void setDataToWeatherLayout(MainJSON data, int index) {
+        DataJSON dataObject = data.getData().get(index);
+        WeatherJSON weatherObject = dataObject.getWeather();
 
         String iconPath = PATH_TO_ICONS + weatherObject.getIcon() + ".png";
         String temperature = dataObject.getTemp() + DEGREE_CELCIUS;

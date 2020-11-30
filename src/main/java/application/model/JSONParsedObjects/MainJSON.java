@@ -2,14 +2,14 @@ package application.model.JSONParsedObjects;
 
 import java.util.ArrayList;
 
-public class MainJSONObject {
+public class MainJSON {
 
-    private ArrayList<DataJSONObject> data;
+    private ArrayList<DataJSON> data;
     private String city_name;
     private String country_code;
     private String errorMessage;
 
-    public ArrayList<DataJSONObject> getData() {
+    public ArrayList<DataJSON> getData() {
         return data;
     }
 
@@ -21,14 +21,6 @@ public class MainJSONObject {
 
     public String getFullCityName() {
         return city_name + ", " + country_code;
-    }
-
-    public String getCity_name() {
-        return city_name;
-    }
-
-    public String getCountry_code() {
-        return country_code;
     }
 
     public String getErrorMessage() {

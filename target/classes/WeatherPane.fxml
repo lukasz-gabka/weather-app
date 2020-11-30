@@ -12,17 +12,17 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="365.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TextField fx:id="typeCityTextField" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="323.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="14.0">
+        <TextField fx:id="typeCityTextField" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="340.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="14.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font></TextField>
         <Label fx:id="errorLabel" layoutX="14.0" layoutY="46.0" prefHeight="13.0" prefWidth="323.0" textFill="RED" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="46.0" />
-        <Button fx:id="deleteCityButton" layoutX="328.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteCityAction" text="X" textFill="RED">
+        <Button fx:id="deleteCityButton" layoutX="330.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteCityAction" text="X" textFill="RED">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-      <TabPane fx:id="weatherTabPane" layoutX="14.0" layoutY="71.0" prefHeight="322.0" prefWidth="338.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="weatherTabPane" layoutX="14.0" layoutY="71.0" prefHeight="322.0" prefWidth="340.0" style="-fx-border-style: solid; -fx-border-width: 1; -fx-border-color: #b5b5b5;" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="currentWeatherTab" text="Aktualna pogoda" />
           <Tab text="Prognoza 5-dniowa">
