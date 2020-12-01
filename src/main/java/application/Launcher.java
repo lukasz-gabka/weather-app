@@ -14,6 +14,9 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Persistence.loadFromPersistence();
+        System.out.println(Persistence.getCityName(0));
+        System.out.println(Persistence.getCityName(1));
         ViewManager viewManager = new ViewManager();
 
         Scene scene = new Scene(viewManager.initializeMainLayout());
@@ -25,8 +28,6 @@ public class Launcher extends Application {
     }
 
     public void stop() {
-        System.out.println(Persistence.getCityName(0));
-        System.out.println(Persistence.getCityName(1));
-        Persistence.saveToPersistence(Persistence.getCityName());
+        Persistence.saveToPersistence(Persistence.getCitiesNames());
     }
 }

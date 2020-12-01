@@ -1,15 +1,12 @@
 package application.model;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 
 public class Persistence {
 
     private static final String FILE_PATH = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
     private static final String FILE_NAME =  File.separator + "SavedCities.txt";
-    private static String[] cityName = new String[2];
+    private static String[] citiesNames = new String[2];
 
     public static void saveToPersistence(String[] cityName) {
         try {
@@ -27,19 +24,27 @@ public class Persistence {
         }
     }
 
+    public static void loadFromPersistence() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(FILE_PATH + FILE_NAME);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            String[] array = (String[]) objectInputStream.readObject();
+
+            citiesNames = array;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String getCityName(int index) {
-        return cityName[index];
+        return citiesNames[index];
     }
 
     public static void setCityName(String cityName, int index) {
-        Persistence.cityName[index] = cityName;
+        Persistence.citiesNames[index] = cityName;
     }
 
-    public static String[] getCityName() {
-        return cityName;
-    }
-
-    public static void setCityName(String[] cityName) {
-        Persistence.cityName = cityName;
+    public static String[] getCitiesNames() {
+        return citiesNames;
     }
 }
