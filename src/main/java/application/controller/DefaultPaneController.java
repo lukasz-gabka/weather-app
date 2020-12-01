@@ -19,10 +19,10 @@ public class DefaultPaneController extends BaseController {
 
     @FXML
     void typeCityAction() {
-        errorLabel.setText("");
+        this.errorLabel.setText("");
 
-        Scene scene = errorLabel.getScene();
-        String userInput = typeCityTextField.getText();
+        Scene scene = this.parent.getScene();
+        String userInput = this.typeCityTextField.getText();
         WeatherData weatherData = new WeatherData();
 
         Thread thread = new Thread(() -> {
@@ -38,9 +38,11 @@ public class DefaultPaneController extends BaseController {
                 if (currentWeatherData.getErrorMessage() == null) {
                     String fullCityName = dailyForecastData.getFullCityName();
 
-                    viewManager.changeLayout(scene, this, new WeatherPaneController(viewManager, fullCityName, currentWeatherData, dailyForecastData));
+                    WeatherPaneController weatherPaneController = new WeatherPaneController(viewManager, fullCityName, currentWeatherData, dailyForecastData);
+                    viewManager.changeLayout(scene, this, weatherPaneController);
+                    weatherPaneController.saveToPersistence(userInput);
                 } else {
-                    errorLabel.setText(currentWeatherData.getErrorMessage());
+                    this.errorLabel.setText(currentWeatherData.getErrorMessage());
                 }
             });
         });
@@ -50,6 +52,6 @@ public class DefaultPaneController extends BaseController {
     public DefaultPaneController(ViewManager viewManager) {
         super(viewManager, "DefaultPane.fxml");
 
-        typeCityTextField.setFocusTraversable(false);
+        this.typeCityTextField.setFocusTraversable(false);
     }
 }

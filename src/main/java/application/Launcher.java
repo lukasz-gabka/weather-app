@@ -1,5 +1,6 @@
 package application;
 
+import application.model.Persistence;
 import application.view.ViewManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -21,5 +22,10 @@ public class Launcher extends Application {
         stage.setResizable(false);
         stage.setTitle("Doradca pogodowy");
         stage.show();
+    }
+
+    public void stop() {
+        System.out.println(Persistence.getCityName(0));
+        System.out.println(Persistence.getCityName(1));
     }
 }
