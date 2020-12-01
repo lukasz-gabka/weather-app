@@ -27,5 +27,6 @@ public class Launcher extends Application {
     public void stop() {
         System.out.println(Persistence.getCityName(0));
         System.out.println(Persistence.getCityName(1));
+        Persistence.saveToPersistence(Persistence.getCityName());
     }
 }
