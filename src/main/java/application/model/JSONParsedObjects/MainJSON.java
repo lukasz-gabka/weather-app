@@ -30,4 +30,8 @@ public class MainJSON {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
+
+    public String getCity_name() {
+        return city_name;
+    }
 }

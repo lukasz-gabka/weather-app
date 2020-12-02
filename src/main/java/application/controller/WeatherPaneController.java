@@ -6,7 +6,6 @@ import application.view.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class WeatherPaneController extends BaseController {
@@ -37,7 +36,7 @@ public class WeatherPaneController extends BaseController {
         Scene scene = this.parent.getScene();
 
         deleteFromPersistence(scene);
-        viewManager.changeLayout(scene, this, new DefaultPaneController(viewManager));
+        viewManager.changeLayout(scene, this, new DefaultPaneController(viewManager, null));
     }
 
     public WeatherPaneController(ViewManager viewManager, String cityName, MainJSON currentWeatherData, MainJSON dailyForecastData) {
@@ -57,15 +56,12 @@ public class WeatherPaneController extends BaseController {
     }
 
     public void saveToPersistence(String cityName) {
-        Scene scene = this.parent.getScene();
-        HBox hBox = (HBox) scene.getRoot();
-        int index = hBox.getChildren().indexOf(this.parent);
+        int index = viewManager.getLayoutIndex(this.parent);
         Persistence.setCityName(cityName, index);
     }
 
     public void deleteFromPersistence(Scene scene) {
-        HBox hBox = (HBox) scene.getRoot();
-        int index = hBox.getChildren().indexOf(this.parent);
+        int index = viewManager.getLayoutIndex(this.parent);
         Persistence.setCityName(null, index);
     }
 }
