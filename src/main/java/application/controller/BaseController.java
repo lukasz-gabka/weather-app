@@ -3,14 +3,15 @@ package application.controller;
 import application.view.ViewManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 import java.io.IOException;
 
 public abstract class BaseController {
 
     protected ViewManager viewManager;
-    private String fxmlName;
-    private Parent parent;
+    protected String fxmlName;
+    protected Parent parent;
 
     public BaseController(ViewManager viewManager, String fxmlName) {
         this.viewManager = viewManager;

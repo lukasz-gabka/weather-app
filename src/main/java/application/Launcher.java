@@ -1,5 +1,6 @@
 package application;
 
+import application.model.Persistence;
 import application.view.ViewManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,6 +14,9 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        if (Persistence.isFileExists())
+            Persistence.loadFromPersistence();
+
         ViewManager viewManager = new ViewManager();
 
         Scene scene = new Scene(viewManager.initializeMainLayout());
@@ -21,5 +25,11 @@ public class Launcher extends Application {
         stage.setResizable(false);
         stage.setTitle("Doradca pogodowy");
         stage.show();
+
+        Persistence.initializeWithPersistence();
+    }
+
+    public void stop() {
+        Persistence.saveToPersistence(Persistence.getCityName());
     }
 }

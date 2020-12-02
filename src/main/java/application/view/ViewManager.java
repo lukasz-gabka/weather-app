@@ -13,10 +13,10 @@ public class ViewManager {
         MainPaneController mainPaneController = new MainPaneController(this);
         HBox hBox = (HBox) mainPaneController.getParent();
 
-        DefaultPaneController defaultLeftPaneController = new DefaultPaneController(this);
+        DefaultPaneController defaultLeftPaneController = new DefaultPaneController(this, null);
         Parent leftParent = defaultLeftPaneController.getParent();
 
-        DefaultPaneController defaultRightPaneController = new DefaultPaneController(this);
+        DefaultPaneController defaultRightPaneController = new DefaultPaneController(this, null);
         Parent rightParent = defaultRightPaneController.getParent();
 
         hBox.getChildren().addAll(leftParent, rightParent);
@@ -28,8 +28,8 @@ public class ViewManager {
         Parent newParent = newController.getParent();
         Parent currentParent = currentController.getParent();
 
+        int index = getLayoutIndex(currentParent);
         HBox hBox = (HBox) scene.getRoot();
-        int index = hBox.getChildren().indexOf(currentParent);
 
         hBox.getChildren().remove(currentParent);
         hBox.getChildren().add(index, newParent);
@@ -43,5 +43,12 @@ public class ViewManager {
     public void initializeDailyForecastLayout(VBox vBox, BaseController controller, int index) {
         Parent parent = controller.getParent();
         vBox.getChildren().add(index, parent);
+    }
+
+    public int getLayoutIndex(Parent parent) {
+        Scene scene = parent.getScene();
+        HBox hBox = (HBox) scene.getRoot();
+
+        return hBox.getChildren().indexOf(parent);
     }
 }
