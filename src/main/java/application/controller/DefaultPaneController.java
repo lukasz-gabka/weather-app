@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.model.dto.MainDto;
-import application.model.Persistence;
 import application.model.WeatherData;
 import application.view.ViewManager;
 import javafx.application.Platform;
@@ -36,9 +35,6 @@ public class DefaultPaneController extends BaseController {
         super(viewManager, "DefaultPane.fxml");
 
         this.typeCityTextField.setFocusTraversable(false);
-
-        Persistence persistence = new Persistence();
-        persistence.addController(this);
     }
 
     public void initializeWeatherLayout(String cityName) {

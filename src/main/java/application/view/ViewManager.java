@@ -1,6 +1,7 @@
 package application.view;
 
 import application.controller.*;
+import application.model.Persistence;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -9,7 +10,7 @@ import javafx.scene.layout.VBox;
 
 public class ViewManager {
 
-    public HBox initializeMainLayout() {
+    public HBox initializeMainLayout(boolean isPersistenceLoaded) {
         MainPaneController mainPaneController = new MainPaneController(this);
         HBox hBox = (HBox) mainPaneController.getParent();
 
@@ -20,6 +21,11 @@ public class ViewManager {
         Parent rightParent = defaultRightPaneController.getParent();
 
         hBox.getChildren().addAll(leftParent, rightParent);
+
+        if (isPersistenceLoaded) {
+            Persistence persistence = new Persistence();
+            persistence.addControllers(defaultLeftPaneController, defaultRightPaneController);
+        }
 
         return hBox;
     }

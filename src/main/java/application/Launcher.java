@@ -21,7 +21,7 @@ public class Launcher extends Application {
         }
 
         ViewManager viewManager = new ViewManager();
-        Scene scene = new Scene(viewManager.initializeMainLayout());
+        Scene scene = new Scene(viewManager.initializeMainLayout(persistence.isPersistenceLoaded()));
 
         stage.setScene(scene);
         stage.setResizable(false);

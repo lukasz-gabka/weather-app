@@ -8,11 +8,17 @@ import java.util.List;
 
 public class Persistence {
 
+    private boolean isPersistenceLoaded;
+
     private static final String FILE_PATH = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
     private static final String FILE_NAME =  File.separator + "SavedCities.txt";
     private static String[] cities = new String[2];
 
     private static List<DefaultPaneController> controllers = new ArrayList<>();
+
+    public Persistence() {
+        isPersistenceLoaded = false;
+    }
 
     public void saveToPersistence() {
         try {
@@ -34,6 +40,8 @@ public class Persistence {
             FileInputStream fileInputStream = new FileInputStream(FILE_PATH + FILE_NAME);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             cities = (String[]) objectInputStream.readObject();
+
+            isPersistenceLoaded = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,8 +61,13 @@ public class Persistence {
         return file.exists();
     }
 
-    public void addController(DefaultPaneController controller) {
-        controllers.add(controller);
+    public boolean isPersistenceLoaded() {
+        return isPersistenceLoaded;
+    }
+
+    public void addControllers(DefaultPaneController controller1, DefaultPaneController controller2) {
+        controllers.add(controller1);
+        controllers.add(controller2);
     }
 
     public void setCityName(String cityName, int index) {
