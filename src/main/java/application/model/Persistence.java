@@ -4,6 +4,7 @@ import application.controller.DefaultPaneController;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Persistence {
 
@@ -11,13 +12,50 @@ public class Persistence {
     private static final String FILE_NAME =  File.separator + "SavedCities.txt";
     private static String[] citiesNames = new String[2];
 
-    private static ArrayList<DefaultPaneController> defaultPaneController = new ArrayList<DefaultPaneController>();
+    private static List<DefaultPaneController> defaultPaneController = new ArrayList<>();
 
-    public static void saveToPersistence(String[] cityName) {
+    public void saveToPersistence(String[] cityName) {
         try {
             File filePath = new File(FILE_PATH);
-            if (!isPathExists())
-                filePath.mkdir();
+            if (!filePath.exists()) {
+                if (filePath.mkdir()) {
+                    createFile(cityName);
+                }
+            } else {
+                createFile(cityName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadFromPersistence() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(FILE_PATH + FILE_NAME);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            citiesNames = (String[]) objectInputStream.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initializeWithPersistence() {
+        for (int i = 0; i < citiesNames.length; i++) {
+            if (citiesNames[i] != null) {
+                DefaultPaneController controller = defaultPaneController.get(i);
+
+                controller.initializeWeatherLayout(citiesNames[i]);
+            }
+        }
+    }
+
+    public static boolean isFileExists() {
+        File file = new File(FILE_PATH + FILE_NAME);
+        return file.exists();
+    }
+
+    private void createFile(String[] cityName) {
+        try {
             File file = new File(FILE_PATH + FILE_NAME);
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -30,48 +68,12 @@ public class Persistence {
         }
     }
 
-    public static void loadFromPersistence() {
-        try {
-            FileInputStream fileInputStream = new FileInputStream(FILE_PATH + FILE_NAME);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            String[] array = (String[]) objectInputStream.readObject();
-
-            citiesNames = array;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void initializeWithPersistence() {
-        for (int i = 0; i <= 1; i++) {
-            if (citiesNames[i] != null) {
-                DefaultPaneController controller = defaultPaneController.get(i);
-
-                controller.initializeWeatherLayout(citiesNames[i]);
-            }
-        }
-    }
-
-    public static boolean isPathExists() {
-        File file = new File(FILE_PATH);
-        return file.exists();
-    }
-
-    public static boolean isFileExists() {
-        File file = new File(FILE_PATH + FILE_NAME);
-        return file.exists();
-    }
-
     public static void addController(DefaultPaneController controller) {
         defaultPaneController.add(controller);
     }
 
-    public static String getCityName(int index) {
-        return citiesNames[index];
-    }
-
-    public static void setCityName(String cityName, int index) {
-        Persistence.citiesNames[index] = cityName;
+    public void setCityName(String cityName, int index) {
+        citiesNames[index] = cityName;
     }
 
     public static String[] getCityName() {
