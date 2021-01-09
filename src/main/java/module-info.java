@@ -1,4 +1,4 @@
-module weather.app {
+module application {
 
     requires javafx.fxml;
     requires javafx.controls;

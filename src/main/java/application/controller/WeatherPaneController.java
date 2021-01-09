@@ -1,6 +1,6 @@
 package application.controller;
 
-import application.model.JSONParsedObjects.MainJSON;
+import application.model.dto.MainDto;
 import application.model.Persistence;
 import application.view.ViewManager;
 import javafx.fxml.FXML;
@@ -36,32 +36,45 @@ public class WeatherPaneController extends BaseController {
         Scene scene = this.parent.getScene();
 
         deleteFromPersistence(scene);
-        viewManager.changeLayout(scene, this, new DefaultPaneController(viewManager, null));
+        viewManager.changeLayout(scene, this, new DefaultPaneController(viewManager));
     }
 
-    public WeatherPaneController(ViewManager viewManager, String cityName, MainJSON currentWeatherData, MainJSON dailyForecastData) {
+    public WeatherPaneController(ViewManager viewManager, String cityName, MainDto currentWeatherData, MainDto dailyForecastData) {
         super(viewManager, "WeatherPane.fxml");
 
         this.typeCityTextField.setFocusTraversable(false);
         this.deleteCityButton.setFocusTraversable(false);
-
         this.typeCityTextField.setText(cityName);
 
         viewManager.initializeCurrentWeatherLayout(this.currentWeatherTab, new CurrentWeatherPaneController(viewManager, currentWeatherData));
+        addDailyForecastDataToLayout(viewManager, dailyForecastData);
+    }
 
-        int arrayLength = dailyForecastData.getData().size();
-        for (int i = 1; i <= arrayLength - 1; i++) {
-            viewManager.initializeDailyForecastLayout(this.dailyForecastVBox, new DailyForecastPaneController(viewManager, dailyForecastData, i), i - 1);
+    private void addDailyForecastDataToLayout(ViewManager viewManager, MainDto dailyForecastData) {
+        int tomorrowDataIndex = 1;
+        int fifthDayDataIndex = dailyForecastData.getData().size() - 1;
+
+        for (int i = tomorrowDataIndex; i <= fifthDayDataIndex; i++) {
+            int weatherPaneVBoxIndex = i - 1;
+            viewManager.initializeDailyForecastLayout(
+                    this.dailyForecastVBox,
+                    new DailyForecastPaneController(viewManager, dailyForecastData, i),
+                    weatherPaneVBoxIndex
+            );
         }
     }
 
     public void saveToPersistence(String cityName) {
+        Persistence persistence = new Persistence();
+
         int index = viewManager.getLayoutIndex(this.parent);
-        Persistence.setCityName(cityName, index);
+        persistence.setCityName(cityName, index);
     }
 
     public void deleteFromPersistence(Scene scene) {
+        Persistence persistence = new Persistence();
+
         int index = viewManager.getLayoutIndex(this.parent);
-        Persistence.setCityName(null, index);
+        persistence.setCityName(null, index);
     }
 }

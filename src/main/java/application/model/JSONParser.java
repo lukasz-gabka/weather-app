@@ -1,6 +1,6 @@
 package application.model;
 
-import application.model.JSONParsedObjects.MainJSON;
+import application.model.dto.MainDto;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -9,14 +9,14 @@ import java.io.IOException;
 
 public class JSONParser {
 
-    public static String convertJSONToString(HttpResponse response) throws IOException {
+    private final Gson gson = new Gson();
+
+    public String convertJSONToString(HttpResponse response) throws IOException {
         HttpEntity entity = response.getEntity();
         return EntityUtils.toString(entity);
     }
 
-    public static MainJSON convertStringToObject(String json) {
-        Gson gson = new Gson();
-
-        return gson.fromJson(json, MainJSON.class);
+    public MainDto convertStringToObject(String json) {
+        return gson.fromJson(json, MainDto.class);
     }
 }

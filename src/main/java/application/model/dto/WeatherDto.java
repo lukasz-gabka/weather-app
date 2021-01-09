@@ -1,4 +1,4 @@
-package application.model.dataTransferObjects;
+package application.model.dto;
 
 public class WeatherDto {
 

@@ -1,8 +1,8 @@
 package application.controller;
 
-import application.model.JSONParsedObjects.DataJSON;
-import application.model.JSONParsedObjects.MainJSON;
-import application.model.JSONParsedObjects.WeatherJSON;
+import application.model.dto.DataDto;
+import application.model.dto.MainDto;
+import application.model.dto.WeatherDto;
 import application.view.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,8 +11,8 @@ import javafx.scene.image.ImageView;
 
 public class DailyForecastPaneController extends BaseController {
 
-    private final String DEGREE_CELCIUS = "\u00B0C";
-    private final String PATH_TO_ICONS = "/images/icons/";
+    private static final String DEGREE_CELCIUS = "\u00B0C";
+    private static final String PATH_TO_ICONS = "/images/icons/";
 
     @FXML
     private ImageView weatherImageView;
@@ -41,15 +41,15 @@ public class DailyForecastPaneController extends BaseController {
     @FXML
     private Label dateLabel;
 
-    public DailyForecastPaneController(ViewManager viewManager, MainJSON data, int index) {
+    public DailyForecastPaneController(ViewManager viewManager, MainDto data, int index) {
         super(viewManager, "DailyForecastPane.fxml");
 
         setDataToWeatherLayout(data, index);
     }
 
-    public void setDataToWeatherLayout(MainJSON data, int index) {
-        DataJSON dataObject = data.getData().get(index);
-        WeatherJSON weatherObject = dataObject.getWeather();
+    public void setDataToWeatherLayout(MainDto data, int index) {
+        DataDto dataObject = data.getData().get(index);
+        WeatherDto weatherObject = dataObject.getWeather();
 
         String iconPath = PATH_TO_ICONS + weatherObject.getIcon() + ".png";
         String temperature = dataObject.getTemp() + DEGREE_CELCIUS;
@@ -57,8 +57,8 @@ public class DailyForecastPaneController extends BaseController {
         String pressure = dataObject.getPres() + " hPa";
         String clouds = dataObject.getClouds() + "%";
         String humidity = dataObject.getRh() + "%";
-        String windSpeed = dataObject.getWind_spd() + " km/h";
-        double windDirection = dataObject.getWind_dir();
+        String windSpeed = dataObject.getWindSpd() + " km/h";
+        double windDirection = dataObject.getWindDir();
         Image image = new Image(iconPath);
         String datetime = dataObject.getDatetime();
 

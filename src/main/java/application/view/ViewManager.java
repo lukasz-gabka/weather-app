@@ -13,10 +13,10 @@ public class ViewManager {
         MainPaneController mainPaneController = new MainPaneController(this);
         HBox hBox = (HBox) mainPaneController.getParent();
 
-        DefaultPaneController defaultLeftPaneController = new DefaultPaneController(this, null);
+        DefaultPaneController defaultLeftPaneController = new DefaultPaneController(this);
         Parent leftParent = defaultLeftPaneController.getParent();
 
-        DefaultPaneController defaultRightPaneController = new DefaultPaneController(this, null);
+        DefaultPaneController defaultRightPaneController = new DefaultPaneController(this);
         Parent rightParent = defaultRightPaneController.getParent();
 
         hBox.getChildren().addAll(leftParent, rightParent);

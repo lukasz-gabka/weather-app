@@ -1,53 +1,53 @@
 package application.model;
 
-import application.model.JSONParsedObjects.MainJSON;
+import application.model.dto.MainDto;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 public class WeatherData {
-    public final String CURRENT_WEATHER_URL = "http://api.weatherbit.io/v2.0/current?lang=pl";
-    public final String DAILY_FORECAST_URL = "http://api.weatherbit.io/v2.0/forecast/daily?lang=pl&days=6";
-    private final String API_URL = "&key="; //insert your weatherbit.io api key at the end of this string
-    private final String CITY_URL = "&city=";
 
-    public MainJSON getWeatherData(String cityName, String baseUrl) {
-        HttpClient client = HttpClientBuilder.create().build();
+    private static final String API_URL = "&key="; //insert your weatherbit.io API key at the end of this string
+    private static final String CITY_URL = "&city=";
+
+    private static final String CITY_NOT_FOUND_ERROR_MESSAGE = "Nie znaleziono podanej miejscowości.";
+    private static final String SERVER_ERROR_MESSAGE = "Błąd serwera. Spróbuj ponownie później.";
+    private static final String UNKNOWN_ERROR_MESSAGE = "Nieznany błąd";
+
+    private HttpClient client = HttpClientBuilder.create().build();
+
+    public MainDto getWeatherData(String cityName, String baseUrl) {
         String url = baseUrl + API_URL + CITY_URL + convertSpaceToDash(cityName);
         HttpGet request = new HttpGet(url);
+        JSONParser jsonParser = new JSONParser();
 
         try {
             HttpResponse httpResult = client.execute(request);
 
-            String result = JSONParser.convertJSONToString(httpResult);
+            String result = jsonParser.convertJSONToString(httpResult);
 
-            MainJSON data = JSONParser.convertStringToObject(result);
+            MainDto data = jsonParser.convertStringToObject(result);
             data.isExist();
 
             return data;
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-
-            MainJSON data = new MainJSON();
-            data.setErrorMessage("Nie znaleziono podanej miejscowości.");
-
-            return data;
+            return createErrorMainJSON(CITY_NOT_FOUND_ERROR_MESSAGE);
         } catch (NullPointerException e) {
             e.printStackTrace();
-
-            MainJSON data = new MainJSON();
-            data.setErrorMessage("Błąd serwera. Spróbuj ponownie później.");
-
-            return data;
+            return createErrorMainJSON(SERVER_ERROR_MESSAGE);
         } catch (Exception e) {
             e.printStackTrace();
-
-            MainJSON data = new MainJSON();
-            data.setErrorMessage("Nieznany błąd");
-
-            return data;
+            return createErrorMainJSON(UNKNOWN_ERROR_MESSAGE);
         }
+    }
+
+    private MainDto createErrorMainJSON(String errorMessage) {
+        MainDto data = new MainDto();
+        data.setErrorMessage(errorMessage);
+
+        return data;
     }
 
     private String convertSpaceToDash(String text) {

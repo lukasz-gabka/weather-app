@@ -1,6 +1,6 @@
 package application.controller;
 
-import application.model.JSONParsedObjects.MainJSON;
+import application.model.dto.MainDto;
 import application.model.Persistence;
 import application.model.WeatherData;
 import application.view.ViewManager;
@@ -11,7 +11,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class DefaultPaneController extends BaseController {
+
+    private static final String CURRENT_WEATHER_URL = "http://api.weatherbit.io/v2.0/current?lang=pl";
+    private static final String DAILY_FORECAST_URL = "http://api.weatherbit.io/v2.0/forecast/daily?lang=pl&days=6";
+
+    private static final String LOADING_MESSAGE = "Wczytywanie...";
 
     @FXML
     private TextField typeCityTextField;
@@ -24,48 +32,55 @@ public class DefaultPaneController extends BaseController {
         initializeWeatherLayout(this.typeCityTextField.getText());
     }
 
-    public DefaultPaneController(ViewManager viewManager, String cityName) {
+    public DefaultPaneController(ViewManager viewManager) {
         super(viewManager, "DefaultPane.fxml");
 
         this.typeCityTextField.setFocusTraversable(false);
 
-        Persistence.addController(this);
-
-        if (cityName != null) {
-            initializeWeatherLayout(cityName);
-        }
+        Persistence persistence = new Persistence();
+        persistence.addController(this);
     }
 
-    public void initializeWeatherLayout(String input) {
+    public void initializeWeatherLayout(String cityName) {
         this.errorLabel.setTextFill(Color.BLACK);
-        this.errorLabel.setText("Wczytywanie...");
+        this.errorLabel.setText(LOADING_MESSAGE);
 
         Scene scene = this.parent.getScene();
         WeatherData weatherData = new WeatherData();
 
-        Thread thread = new Thread(() -> {
-            MainJSON currentWeatherData = weatherData.getWeatherData(input, weatherData.CURRENT_WEATHER_URL);
-            try {
-                Thread.sleep(1000); // weatherbit.io API free version enables only 1 request per second
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            MainJSON dailyForecastData = weatherData.getWeatherData(input, weatherData.DAILY_FORECAST_URL);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            MainDto currentWeatherData = weatherData.getWeatherData(cityName, CURRENT_WEATHER_URL);
+            sleep(); // weatherbit.io API free version enables only 1 request per second
+            MainDto dailyForecastData = weatherData.getWeatherData(cityName, DAILY_FORECAST_URL);
 
             Platform.runLater(() -> {
-                if (currentWeatherData.getErrorMessage() == null) {
-                    String fullCityName = dailyForecastData.getFullCityName();
-
-                    WeatherPaneController weatherPaneController = new WeatherPaneController(viewManager, fullCityName, currentWeatherData, dailyForecastData);
-                    viewManager.changeLayout(scene, this, weatherPaneController);
-                    weatherPaneController.saveToPersistence(dailyForecastData.getCity_name());
-                    this.errorLabel.setTextFill(Color.RED);
-                } else {
-                    this.errorLabel.setTextFill(Color.RED);
-                    this.errorLabel.setText(currentWeatherData.getErrorMessage());
-                }
+                handleWeatherData(scene, currentWeatherData, dailyForecastData);
             });
         });
-        thread.start();
+        executorService.shutdown();
+    }
+
+    private void handleWeatherData(Scene scene, MainDto currentWeatherData, MainDto dailyForecastData) {
+        if (currentWeatherData.getErrorMessage() == null) {
+            String fullCityName = dailyForecastData.getFullCityName();
+
+            WeatherPaneController weatherPaneController = new WeatherPaneController(viewManager, fullCityName, currentWeatherData, dailyForecastData);
+            viewManager.changeLayout(scene, this, weatherPaneController);
+            weatherPaneController.saveToPersistence(dailyForecastData.getCityName());
+            this.errorLabel.setTextFill(Color.RED);
+        } else {
+            this.errorLabel.setTextFill(Color.RED);
+            this.errorLabel.setText(currentWeatherData.getErrorMessage());
+        }
+    }
+
+    private void sleep() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        }
     }
 }

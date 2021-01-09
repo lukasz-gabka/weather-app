@@ -12,13 +12,15 @@ public class Launcher extends Application {
         launch(args);
     }
 
+    Persistence persistence = new Persistence();
+
     @Override
-    public void start(Stage stage) throws Exception {
-        if (Persistence.isFileExists())
-            Persistence.loadFromPersistence();
+    public void start(Stage stage) {
+        if (Persistence.isFileExists()) {
+            persistence.loadFromPersistence();
+        }
 
         ViewManager viewManager = new ViewManager();
-
         Scene scene = new Scene(viewManager.initializeMainLayout());
 
         stage.setScene(scene);
@@ -26,10 +28,10 @@ public class Launcher extends Application {
         stage.setTitle("Doradca pogodowy");
         stage.show();
 
-        Persistence.initializeWithPersistence();
+        persistence.initializeWithPersistence();
     }
 
     public void stop() {
-        Persistence.saveToPersistence(Persistence.getCityName());
+        persistence.saveToPersistence();
     }
 }
