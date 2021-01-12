@@ -15,7 +15,7 @@ public class WeatherData {
     private static final String SERVER_ERROR_MESSAGE = "Błąd serwera. Spróbuj ponownie później.";
     private static final String UNKNOWN_ERROR_MESSAGE = "Nieznany błąd";
 
-    private HttpClient client = HttpClientBuilder.create().build();
+    private final HttpClient client = HttpClientBuilder.create().build();
 
     public MainDto getWeatherData(String cityName, String baseUrl) {
         String url = baseUrl + API_URL + CITY_URL + convertSpaceToDash(cityName);
@@ -24,9 +24,7 @@ public class WeatherData {
 
         try {
             HttpResponse httpResult = client.execute(request);
-
             String result = jsonParser.convertJSONToString(httpResult);
-
             MainDto data = jsonParser.convertStringToObject(result);
             data.isExist();
 

@@ -18,14 +18,6 @@ public class DataDto {
         return roundFloatToInt(pres);
     }
 
-    public String getCountryCode() {
-        return country_code;
-    }
-
-    public String getCityName() {
-        return city_name;
-    }
-
     public int getClouds() {
         return Math.round(clouds);
     }

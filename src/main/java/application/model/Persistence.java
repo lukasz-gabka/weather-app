@@ -1,20 +1,14 @@
 package application.model;
 
-import application.controller.DefaultPaneController;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Persistence {
 
+    private String[] cities = new String[2];
     private boolean isPersistenceLoaded;
 
     private static final String FILE_PATH = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
     private static final String FILE_NAME =  File.separator + "SavedCities.txt";
-    private static String[] cities = new String[2];
-
-    private static List<DefaultPaneController> controllers = new ArrayList<>();
 
     public Persistence() {
         isPersistenceLoaded = false;
@@ -47,27 +41,13 @@ public class Persistence {
         }
     }
 
-    public void initializeWithPersistence() {
-        for (int i = 0; i < cities.length; i++) {
-            if (cities[i] != null) {
-                DefaultPaneController controller = controllers.get(i);
-                controller.initializeWeatherLayout(cities[i]);
-            }
-        }
-    }
-
-    public static boolean isFileExists() {
+    public static boolean isFileExist() {
         File file = new File(FILE_PATH + FILE_NAME);
         return file.exists();
     }
 
     public boolean isPersistenceLoaded() {
         return isPersistenceLoaded;
-    }
-
-    public void addControllers(DefaultPaneController controller1, DefaultPaneController controller2) {
-        controllers.add(controller1);
-        controllers.add(controller2);
     }
 
     public void setCityName(String cityName, int index) {
@@ -86,5 +66,9 @@ public class Persistence {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String[] getCities() {
+        return cities;
     }
 }

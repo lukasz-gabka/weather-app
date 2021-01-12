@@ -47,7 +47,7 @@ public class DailyForecastPaneController extends BaseController {
         setDataToWeatherLayout(data, index);
     }
 
-    public void setDataToWeatherLayout(MainDto data, int index) {
+    private void setDataToWeatherLayout(MainDto data, int index) {
         DataDto dataObject = data.getData().get(index);
         WeatherDto weatherObject = dataObject.getWeather();
 

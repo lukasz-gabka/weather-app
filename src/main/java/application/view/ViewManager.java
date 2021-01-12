@@ -4,46 +4,34 @@ import application.controller.*;
 import application.model.Persistence;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ViewManager {
 
-    public HBox initializeMainLayout(boolean isPersistenceLoaded) {
+    public HBox initializeMainLayout(boolean isPersistenceLoaded, Persistence persistence) {
         MainPaneController mainPaneController = new MainPaneController(this);
         HBox hBox = (HBox) mainPaneController.getParent();
 
-        DefaultPaneController defaultLeftPaneController = new DefaultPaneController(this);
-        Parent leftParent = defaultLeftPaneController.getParent();
+        WeatherPaneController leftWeatherPaneController;
+        WeatherPaneController rightWeatherPaneController;
 
-        DefaultPaneController defaultRightPaneController = new DefaultPaneController(this);
-        Parent rightParent = defaultRightPaneController.getParent();
+        if (isPersistenceLoaded) {
+            String[] cities = persistence.getCities();
+
+            leftWeatherPaneController = new WeatherPaneController(this, cities[0], persistence);
+            rightWeatherPaneController = new WeatherPaneController(this, cities[1], persistence);
+        } else {
+            leftWeatherPaneController = new WeatherPaneController(this, null, persistence);
+            rightWeatherPaneController = new WeatherPaneController(this, null, persistence);
+        }
+
+        Parent leftParent = leftWeatherPaneController.getParent();
+        Parent rightParent = rightWeatherPaneController.getParent();
 
         hBox.getChildren().addAll(leftParent, rightParent);
 
-        if (isPersistenceLoaded) {
-            Persistence persistence = new Persistence();
-            persistence.addControllers(defaultLeftPaneController, defaultRightPaneController);
-        }
-
         return hBox;
-    }
-
-    public void changeLayout(Scene scene, BaseController currentController, BaseController newController) {
-        Parent newParent = newController.getParent();
-        Parent currentParent = currentController.getParent();
-
-        int index = getLayoutIndex(currentParent);
-        HBox hBox = (HBox) scene.getRoot();
-
-        hBox.getChildren().remove(currentParent);
-        hBox.getChildren().add(index, newParent);
-    }
-
-    public void initializeCurrentWeatherLayout(Tab tab, BaseController controller) {
-        Parent parent = controller.getParent();
-        tab.setContent(parent);
     }
 
     public void initializeDailyForecastLayout(VBox vBox, BaseController controller, int index) {

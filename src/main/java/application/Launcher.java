@@ -16,19 +16,17 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage stage) {
-        if (Persistence.isFileExists()) {
+        if (Persistence.isFileExist()) {
             persistence.loadFromPersistence();
         }
 
         ViewManager viewManager = new ViewManager();
-        Scene scene = new Scene(viewManager.initializeMainLayout(persistence.isPersistenceLoaded()));
+        Scene scene = new Scene(viewManager.initializeMainLayout(persistence.isPersistenceLoaded(), persistence));
 
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Doradca pogodowy");
         stage.show();
-
-        persistence.initializeWithPersistence();
     }
 
     public void stop() {
