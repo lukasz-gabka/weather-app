@@ -25,7 +25,7 @@ public class Launcher extends Application {
 
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setTitle("Doradca pogodowy");
+        stage.setTitle("Doradca Pogodowy");
         stage.show();
     }
 

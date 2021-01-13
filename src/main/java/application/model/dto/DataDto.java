@@ -15,7 +15,7 @@ public class DataDto {
     private float rh;
 
     public int getPres() {
-        return roundFloatToInt(pres);
+        return Math.round(pres);
     }
 
     public int getClouds() {
@@ -50,7 +50,11 @@ public class DataDto {
         return Math.round(rh);
     }
 
-    private int roundFloatToInt(float number) {
-        return Math.round(number);
+    public void setWind_spd(float wind_spd) {
+        this.wind_spd = wind_spd;
+    }
+
+    public void setPres(float pres) {
+        this.pres = pres;
     }
 }

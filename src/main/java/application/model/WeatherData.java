@@ -31,17 +31,17 @@ public class WeatherData {
             return data;
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return createErrorMainJSON(CITY_NOT_FOUND_ERROR_MESSAGE);
+            return createErrorMainDto(CITY_NOT_FOUND_ERROR_MESSAGE);
         } catch (NullPointerException e) {
             e.printStackTrace();
-            return createErrorMainJSON(SERVER_ERROR_MESSAGE);
+            return createErrorMainDto(SERVER_ERROR_MESSAGE);
         } catch (Exception e) {
             e.printStackTrace();
-            return createErrorMainJSON(UNKNOWN_ERROR_MESSAGE);
+            return createErrorMainDto(UNKNOWN_ERROR_MESSAGE);
         }
     }
 
-    private MainDto createErrorMainJSON(String errorMessage) {
+    private MainDto createErrorMainDto(String errorMessage) {
         MainDto data = new MainDto();
         data.setErrorMessage(errorMessage);
 
