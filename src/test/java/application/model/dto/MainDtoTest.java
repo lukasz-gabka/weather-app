@@ -20,7 +20,7 @@ class MainDtoTest {
     }
 
     @Test
-    void shouldReturnCityNameAndCountryCodeSeparatedWithAComaString() {
+    void shouldReturnCityNameAndCountryCodeSeparatedWithACommaString() {
         //given
         mainDto.setCity_name("Berlin");
         mainDto.setCountry_code("DE");

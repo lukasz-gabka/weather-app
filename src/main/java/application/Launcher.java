@@ -16,7 +16,7 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage stage) {
-        if (Persistence.isFileExist()) {
+        if (persistence.isFileExist()) {
             persistence.loadFromPersistence();
         }
 
