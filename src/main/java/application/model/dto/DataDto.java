@@ -53,8 +53,4 @@ public class DataDto {
     public void setWind_spd(float wind_spd) {
         this.wind_spd = wind_spd;
     }
-
-    public void setPres(float pres) {
-        this.pres = pres;
-    }
 }
