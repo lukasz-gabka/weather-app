@@ -11,8 +11,8 @@ public class DataDto {
     private float temp;
     private float wind_spd;
     private double wind_dir;
-    private float app_temp;
     private float rh;
+    private String ob_time;
 
     public int getPres() {
         return Math.round(pres);
@@ -35,22 +35,27 @@ public class DataDto {
     }
 
     public int getWindSpd() {
-        return Math.round(wind_spd * 3.6f); //converts "m/s" into "km/h"
+        return Math.round(convertUnit(wind_spd));
     }
 
     public double getWindDir() {
         return Math.round(wind_dir);
     }
 
-    public int getAppTemp() {
-        return Math.round(app_temp);
-    }
-
     public int getRh() {
         return Math.round(rh);
     }
 
+    public String getObTime() {
+        int spacePosition = ob_time.indexOf(" ");
+        return ob_time.substring(0, spacePosition);
+    }
     public void setWind_spd(float wind_spd) {
         this.wind_spd = wind_spd;
+    }
+
+    //converts "m/s" into "km/h"
+    private float convertUnit(float value) {
+        return value * 3.6f;
     }
 }

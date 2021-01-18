@@ -20,7 +20,7 @@ public class WeatherData {
     public MainDto getWeatherData(String cityName, String baseUrl) {
         String url = baseUrl + API_URL + CITY_URL + convertSpaceToDash(cityName);
         HttpGet request = new HttpGet(url);
-        JSONParser jsonParser = new JSONParser();
+        JsonParser jsonParser = new JsonParser();
 
         try {
             HttpResponse httpResult = client.execute(request);

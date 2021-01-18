@@ -20,10 +20,9 @@ public class WeatherPaneController extends BaseController {
 
     private static final String CURRENT_WEATHER_URL = "http://api.weatherbit.io/v2.0/current?lang=pl";
     private static final String DAILY_FORECAST_URL = "http://api.weatherbit.io/v2.0/forecast/daily?lang=pl&days=6";
-
     private static final String LOADING_MESSAGE = "Wczytywanie...";
 
-    private Persistence persistence;
+    private final Persistence persistence;
 
     @FXML
     private TextField typeCityTextField;
@@ -72,8 +71,6 @@ public class WeatherPaneController extends BaseController {
     }
 
     public void saveToPersistence(String cityName) {
-        //Persistence persistence = new Persistence();
-
         int index = viewManager.getLayoutIndex(this.parent);
         persistence.setCityName(cityName, index);
     }
@@ -103,8 +100,8 @@ public class WeatherPaneController extends BaseController {
 
             setControlsOnHandleData(fullCityName);
 
-            CurrentWeatherPaneController currentWeatherPaneController = new CurrentWeatherPaneController(viewManager, currentWeatherData);
-            Parent currentWeatherParent = currentWeatherPaneController.getParent();
+            WeatherDataPaneController weatherDataPaneController = new WeatherDataPaneController(viewManager, currentWeatherData);
+            Parent currentWeatherParent = weatherDataPaneController.getParent();
             currentWeatherTab.setContent(currentWeatherParent);
 
             addDailyForecastDataToLayout(viewManager, dailyForecastData);
@@ -157,7 +154,7 @@ public class WeatherPaneController extends BaseController {
             int weatherPaneVBoxIndex = i - 1;
             viewManager.initializeDailyForecastLayout(
                     this.dailyForecastVBox,
-                    new DailyForecastPaneController(viewManager, dailyForecastData, i),
+                    new WeatherDataPaneController(viewManager, dailyForecastData, i),
                     weatherPaneVBoxIndex
             );
         }

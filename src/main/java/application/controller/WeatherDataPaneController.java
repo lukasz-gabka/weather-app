@@ -9,9 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class DailyForecastPaneController extends BaseController {
+public class WeatherDataPaneController extends BaseController {
 
-    private static final String DEGREE_CELCIUS = "\u00B0C";
+    private static final String DEGREE_CELSIUS = "\u00B0C";
     private static final String PATH_TO_ICONS = "/images/icons/";
 
     @FXML
@@ -41,26 +41,36 @@ public class DailyForecastPaneController extends BaseController {
     @FXML
     private Label dateLabel;
 
-    public DailyForecastPaneController(ViewManager viewManager, MainDto data, int index) {
-        super(viewManager, "DailyForecastPane.fxml");
+    public WeatherDataPaneController(ViewManager viewManager, MainDto mainDto) {
+        super(viewManager, "WeatherDataPane.fxml");
 
-        setDataToWeatherLayout(data, index);
+        DataDto dataObject = mainDto.getData().get(0);
+
+        setDataToWeatherLayout(dataObject);
+        setDatetimeToDateLabel(dataObject.getObTime());
     }
 
-    private void setDataToWeatherLayout(MainDto data, int index) {
-        DataDto dataObject = data.getData().get(index);
-        WeatherDto weatherObject = dataObject.getWeather();
+    public WeatherDataPaneController(ViewManager viewManager, MainDto mainDto, int index) {
+        super(viewManager, "WeatherDataPane.fxml");
+
+        DataDto dataObject = mainDto.getData().get(index);
+
+        setDataToWeatherLayout(dataObject);
+        setDatetimeToDateLabel(dataObject.getDatetime());
+    }
+
+    private void setDataToWeatherLayout(DataDto dataDto) {
+        WeatherDto weatherObject = dataDto.getWeather();
 
         String iconPath = PATH_TO_ICONS + weatherObject.getIcon() + ".png";
-        String temperature = dataObject.getTemp() + DEGREE_CELCIUS;
+        String temperature = dataDto.getTemp() + DEGREE_CELSIUS;
         String description = weatherObject.getDescription();
-        String pressure = dataObject.getPres() + " hPa";
-        String clouds = dataObject.getClouds() + "%";
-        String humidity = dataObject.getRh() + "%";
-        String windSpeed = dataObject.getWindSpd() + " km/h";
-        double windDirection = dataObject.getWindDir();
+        String pressure = dataDto.getPres() + " hPa";
+        String clouds = dataDto.getClouds() + "%";
+        String humidity = dataDto.getRh() + "%";
+        String windSpeed = dataDto.getWindSpd() + " km/h";
+        double windDirection = dataDto.getWindDir();
         Image image = new Image(iconPath);
-        String datetime = dataObject.getDatetime();
 
         weatherImageView.setImage(image);
         temperatureLabel.setText(temperature);
@@ -70,6 +80,9 @@ public class DailyForecastPaneController extends BaseController {
         humidityLabel.setText(humidity);
         windSpeedLabel.setText(windSpeed);
         arrowImageView.setRotate(windDirection);
+    }
+
+    private void setDatetimeToDateLabel(String datetime) {
         dateLabel.setText(datetime);
     }
 }
