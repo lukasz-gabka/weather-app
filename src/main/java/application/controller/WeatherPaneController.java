@@ -100,7 +100,7 @@ public class WeatherPaneController extends BaseController {
 
             setControlsOnHandleData(fullCityName);
 
-            WeatherDataPaneController weatherDataPaneController = new WeatherDataPaneController(viewManager, currentWeatherData);
+            WeatherDataPaneController weatherDataPaneController = new WeatherDataPaneController(viewManager, currentWeatherData, 0);
             Parent currentWeatherParent = weatherDataPaneController.getParent();
             currentWeatherTab.setContent(currentWeatherParent);
 

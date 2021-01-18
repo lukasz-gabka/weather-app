@@ -41,22 +41,12 @@ public class WeatherDataPaneController extends BaseController {
     @FXML
     private Label dateLabel;
 
-    public WeatherDataPaneController(ViewManager viewManager, MainDto mainDto) {
-        super(viewManager, "WeatherDataPane.fxml");
-
-        DataDto dataObject = mainDto.getData().get(0);
-
-        setDataToWeatherLayout(dataObject);
-        setDatetimeToDateLabel(dataObject.getObTime());
-    }
-
     public WeatherDataPaneController(ViewManager viewManager, MainDto mainDto, int index) {
         super(viewManager, "WeatherDataPane.fxml");
 
         DataDto dataObject = mainDto.getData().get(index);
 
         setDataToWeatherLayout(dataObject);
-        setDatetimeToDateLabel(dataObject.getDatetime());
     }
 
     private void setDataToWeatherLayout(DataDto dataDto) {
@@ -71,6 +61,7 @@ public class WeatherDataPaneController extends BaseController {
         String windSpeed = dataDto.getWindSpd() + " km/h";
         double windDirection = dataDto.getWindDir();
         Image image = new Image(iconPath);
+        String date = dataDto.getDate();
 
         weatherImageView.setImage(image);
         temperatureLabel.setText(temperature);
@@ -80,9 +71,6 @@ public class WeatherDataPaneController extends BaseController {
         humidityLabel.setText(humidity);
         windSpeedLabel.setText(windSpeed);
         arrowImageView.setRotate(windDirection);
-    }
-
-    private void setDatetimeToDateLabel(String datetime) {
-        dateLabel.setText(datetime);
+        dateLabel.setText(date);
     }
 }

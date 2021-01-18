@@ -12,7 +12,18 @@ public class DataDto {
     private float wind_spd;
     private double wind_dir;
     private float rh;
-    private String ob_time;
+
+    /**
+     * Date should be in format YY-MM-DD
+     * While getting current weather data, the datetime field has format YY-MM-DD:HH
+     * While getting daily forecast data, the datetime field has proper format
+     */
+    public String getDate() {
+        if (datetime.contains(":")) {
+            return trimDateTime();
+        }
+        return datetime;
+    }
 
     public int getPres() {
         return Math.round(pres);
@@ -24,10 +35,6 @@ public class DataDto {
 
     public WeatherDto getWeather() {
         return weather;
-    }
-
-    public String getDatetime() {
-        return datetime;
     }
 
     public int getTemp() {
@@ -46,10 +53,11 @@ public class DataDto {
         return Math.round(rh);
     }
 
-    public String getObTime() {
-        int spacePosition = ob_time.indexOf(" ");
-        return ob_time.substring(0, spacePosition);
+    public String trimDateTime() {
+        int colonPosition = datetime.indexOf(":");
+        return datetime.substring(0, colonPosition);
     }
+
     public void setWind_spd(float wind_spd) {
         this.wind_spd = wind_spd;
     }
