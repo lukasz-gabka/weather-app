@@ -53,9 +53,13 @@ public class DataDto {
         return Math.round(rh);
     }
 
-    public String trimDateTime() {
+    private String trimDateTime() {
         int colonPosition = datetime.indexOf(":");
         return datetime.substring(0, colonPosition);
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
     public void setWind_spd(float wind_spd) {

@@ -7,16 +7,19 @@ public class Persistence {
     private String[] cities = new String[2];
     private boolean isPersistenceLoaded;
 
-    private String filePath = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
-    private String fileName =  File.separator + "SavedCities.txt";
+    private final String FILE_PATH = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
+    private final String FILE_NAME =  File.separator + "SavedCities.txt";
+
+    private File path;
+    private File file;
 
     public Persistence() {
+        path = new File(FILE_PATH);
+        file = new File(FILE_PATH + FILE_NAME);
         isPersistenceLoaded = false;
     }
 
     public void saveToPersistence() {
-
-            File path = new File(filePath);
             if (!path.exists()) {
                 if (path.mkdir()) {
                     createFile(cities);
@@ -26,12 +29,11 @@ public class Persistence {
             } else {
                 createFile(cities);
             }
-
     }
 
     public void loadFromPersistence() {
         try {
-            FileInputStream fileInputStream = new FileInputStream(filePath + fileName);
+            FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             cities = (String[]) objectInputStream.readObject();
 
@@ -45,7 +47,6 @@ public class Persistence {
     }
 
     public boolean isFileExist() {
-        File file = new File(filePath + fileName);
         return file.exists();
     }
 
@@ -59,7 +60,6 @@ public class Persistence {
 
     private void createFile(String[] cities) {
         try {
-            File file = new File(filePath + fileName);
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(cities);
@@ -75,23 +75,19 @@ public class Persistence {
         return cities;
     }
 
+    public File getPath() {
+        return path;
+    }
+
     public void setCities(String[] cities) {
         this.cities = cities;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public void setPath(File path) {
+        this.path = path;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFile(File file) {
+        this.file = file;
     }
 }

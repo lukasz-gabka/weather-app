@@ -7,10 +7,35 @@ import static org.hamcrest.Matchers.equalTo;
 
 class DataDtoTest {
 
+    DataDto dataDto = new DataDto();
+
+    @Test
+    void shouldReturnDateWhenDatetimeHasCorrectFormat() {
+        //given
+        dataDto.setDatetime("2020-01-19");
+
+        //when
+        String date = dataDto.getDate();
+
+        //then
+        assertThat(date, equalTo("2020-01-19"));
+    }
+
+    @Test
+    void shouldReturnDateInProperFormatWhenDatetimeHasWrongFormat() {
+        //given
+        dataDto.setDatetime("2020-01-19:17");
+
+        //when
+        String date = dataDto.getDate();
+
+        //then
+        assertThat(date, equalTo("2020-01-19"));
+    }
+
     @Test
     void shouldReturnWindSpdConvertedFromMetersPerSecondToKilometersPerHourRounded() {
         //given
-        DataDto dataDto = new DataDto();
         dataDto.setWind_spd(1);
 
         //when
