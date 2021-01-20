@@ -59,15 +59,11 @@ public class WeatherPaneController extends BaseController {
         saveToPersistence(null);
     }
 
-    public WeatherPaneController(ViewManager viewManager, String city, Persistence persistence) {
+    public WeatherPaneController(ViewManager viewManager, Persistence persistence) {
         super(viewManager, "WeatherPane.fxml");
 
         this.persistence = persistence;
         setControlsOnCreate();
-
-        if (city != null) {
-            initializeWeatherLayout(city);
-        }
     }
 
     public void saveToPersistence(String cityName) {
@@ -75,7 +71,7 @@ public class WeatherPaneController extends BaseController {
         persistence.setCityName(cityName, index);
     }
 
-    private void initializeWeatherLayout(String cityName) {
+    public void initializeWeatherLayout(String cityName) {
         this.errorLabel.setTextFill(Color.BLACK);
         this.errorLabel.setText(LOADING_MESSAGE);
 

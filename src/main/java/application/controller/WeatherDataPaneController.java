@@ -82,10 +82,6 @@ public class WeatherDataPaneController extends BaseController {
         return temperatureLabel;
     }
 
-    public Label getDescriptionLabel() {
-        return descriptionLabel;
-    }
-
     public Label getPressureLabel() {
         return pressureLabel;
     }

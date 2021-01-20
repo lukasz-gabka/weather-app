@@ -13,17 +13,18 @@ public class ViewManager {
         MainPaneController mainPaneController = new MainPaneController(this);
         HBox hBox = (HBox) mainPaneController.getParent();
 
-        WeatherPaneController leftWeatherPaneController;
-        WeatherPaneController rightWeatherPaneController;
+        WeatherPaneController leftWeatherPaneController = new WeatherPaneController(this, persistence);
+        WeatherPaneController rightWeatherPaneController = new WeatherPaneController(this, persistence);
 
         if (isPersistenceLoaded) {
             String[] cities = persistence.getCities();
 
-            leftWeatherPaneController = new WeatherPaneController(this, cities[0], persistence);
-            rightWeatherPaneController = new WeatherPaneController(this, cities[1], persistence);
-        } else {
-            leftWeatherPaneController = new WeatherPaneController(this, null, persistence);
-            rightWeatherPaneController = new WeatherPaneController(this, null, persistence);
+            if (cities[0] != null) {
+                leftWeatherPaneController.initializeWeatherLayout(cities[0]);
+            }
+            if (cities[1] != null) {
+                rightWeatherPaneController.initializeWeatherLayout(cities[1]);
+            }
         }
 
         Parent leftParent = leftWeatherPaneController.getParent();
