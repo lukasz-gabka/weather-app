@@ -73,4 +73,36 @@ public class WeatherDataPaneController extends BaseController {
         arrowImageView.setRotate(windDirection);
         dateLabel.setText(date);
     }
+
+    public ImageView getWeatherImageView() {
+        return weatherImageView;
+    }
+
+    public Label getTemperatureLabel() {
+        return temperatureLabel;
+    }
+
+    public Label getDescriptionLabel() {
+        return descriptionLabel;
+    }
+
+    public Label getPressureLabel() {
+        return pressureLabel;
+    }
+
+    public Label getCloudsLabel() {
+        return cloudsLabel;
+    }
+
+    public Label getHumidityLabel() {
+        return humidityLabel;
+    }
+
+    public Label getWindSpeedLabel() {
+        return windSpeedLabel;
+    }
+
+    public ImageView getArrowImageView() {
+        return arrowImageView;
+    }
 }
