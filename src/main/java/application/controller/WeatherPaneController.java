@@ -100,7 +100,7 @@ public class WeatherPaneController extends BaseController {
             Parent currentWeatherParent = weatherDataPaneController.getParent();
             currentWeatherTab.setContent(currentWeatherParent);
 
-            addDailyForecastDataToLayout(viewManager, dailyForecastData);
+            viewManager.initializeWeatherDataLayout(dailyForecastVBox, dailyForecastData);
 
             saveToPersistence(dailyForecastData.getCityName());
         } else {
@@ -140,20 +140,6 @@ public class WeatherPaneController extends BaseController {
         weatherTabPane.setVisible(true);
 
         deleteCityButton.setVisible(true);
-    }
-
-    private void addDailyForecastDataToLayout(ViewManager viewManager, MainDto dailyForecastData) {
-        int tomorrowDataIndex = 1;
-        int fifthDayDataIndex = dailyForecastData.getData().size() - 1;
-
-        for (int i = tomorrowDataIndex; i <= fifthDayDataIndex; i++) {
-            int weatherPaneVBoxIndex = i - 1;
-            viewManager.initializeDailyForecastLayout(
-                    this.dailyForecastVBox,
-                    new WeatherDataPaneController(viewManager, dailyForecastData, i),
-                    weatherPaneVBoxIndex
-            );
-        }
     }
 
     private void sleep() {

@@ -1,9 +1,12 @@
 package application;
 
+import application.controller.MainPaneController;
+import application.controller.WeatherPaneController;
 import application.model.Persistence;
 import application.view.ViewManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class Launcher extends Application {
@@ -21,7 +24,13 @@ public class Launcher extends Application {
         }
 
         ViewManager viewManager = new ViewManager();
-        Scene scene = new Scene(viewManager.initializeMainLayout(persistence.isPersistenceLoaded(), persistence));
+        HBox mainLayout = viewManager.initializeMainLayout(
+                persistence,
+                new MainPaneController(viewManager),
+                new WeatherPaneController(viewManager, persistence),
+                new WeatherPaneController(viewManager, persistence)
+        );
+        Scene scene = new Scene(mainLayout);
 
         stage.setScene(scene);
         stage.setResizable(false);

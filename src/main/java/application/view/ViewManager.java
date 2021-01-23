@@ -2,6 +2,7 @@ package application.view;
 
 import application.controller.*;
 import application.model.Persistence;
+import application.model.dto.MainDto;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
@@ -9,14 +10,15 @@ import javafx.scene.layout.VBox;
 
 public class ViewManager {
 
-    public HBox initializeMainLayout(boolean isPersistenceLoaded, Persistence persistence) {
-        MainPaneController mainPaneController = new MainPaneController(this);
+    public HBox initializeMainLayout(
+            Persistence persistence,
+            MainPaneController mainPaneController,
+            WeatherPaneController leftWeatherPaneController,
+            WeatherPaneController rightWeatherPaneController) {
+
         HBox hBox = (HBox) mainPaneController.getParent();
 
-        WeatherPaneController leftWeatherPaneController = new WeatherPaneController(this, persistence);
-        WeatherPaneController rightWeatherPaneController = new WeatherPaneController(this, persistence);
-
-        if (isPersistenceLoaded) {
+        if (persistence.isPersistenceLoaded()) {
             String[] cities = persistence.getCities();
 
             if (cities[0] != null) {
@@ -35,7 +37,21 @@ public class ViewManager {
         return hBox;
     }
 
-    public void initializeDailyForecastLayout(VBox vBox, BaseController controller, int index) {
+    public void initializeWeatherDataLayout(VBox dailyForecastVBox, MainDto dailyForecastData) {
+        int tomorrowDataIndex = 1;
+        int fifthDayDataIndex = dailyForecastData.getData().size() - 1;
+
+        for (int i = tomorrowDataIndex; i <= fifthDayDataIndex; i++) {
+            int weatherPaneVBoxIndex = i - 1;
+            initializeSingleWeatherDataPane(
+                    dailyForecastVBox,
+                    new WeatherDataPaneController(this, dailyForecastData, i),
+                    weatherPaneVBoxIndex
+            );
+        }
+    }
+
+    public void initializeSingleWeatherDataPane(VBox vBox, BaseController controller, int index) {
         Parent parent = controller.getParent();
         vBox.getChildren().add(index, parent);
     }

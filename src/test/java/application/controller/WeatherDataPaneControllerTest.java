@@ -18,16 +18,19 @@ import static org.hamcrest.Matchers.equalTo;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class WeatherDataPaneControllerTest {
 
+    //instantiation of jxfPanel is necessary to use controllers with JavaFX controls in test scope
+    //without jxfPanel, ExceptionInInitializerError and IllegalStateException is thrown
+    JFXPanel jfxPanel = new JFXPanel();
+
     WeatherDataPaneController controller;
     MainDto currentWeatherData;
-    JFXPanel jfxPanel = new JFXPanel();
 
     @BeforeAll
     void generateWeatherObjects() {
-        String currentWeatherPath = "src/test/resources/CurrentWeatherJson.txt";
+        String currentWeatherDataPath = "src/test/resources/CurrentWeatherJson.txt";
         MainDtoTestGenerator generator = new MainDtoTestGenerator();
 
-        currentWeatherData = generator.getMainDto(currentWeatherPath);
+        currentWeatherData = generator.getMainDto(currentWeatherDataPath);
 
         controller = new WeatherDataPaneController(new ViewManager(), currentWeatherData, 0);
     }
