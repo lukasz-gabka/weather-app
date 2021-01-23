@@ -7,13 +7,13 @@ public class Persistence {
     private String[] cities = new String[2];
     private boolean isPersistenceLoaded;
 
-    private final String FILE_PATH = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
-    private final String FILE_NAME =  File.separator + "SavedCities.txt";
-
     private File path;
     private File file;
 
     public Persistence() {
+        String FILE_PATH = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
+        String FILE_NAME = File.separator + "SavedCities.txt";
+
         path = new File(FILE_PATH);
         file = new File(FILE_PATH + FILE_NAME);
         isPersistenceLoaded = false;

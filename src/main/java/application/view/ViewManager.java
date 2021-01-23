@@ -2,6 +2,7 @@ package application.view;
 
 import application.controller.*;
 import application.model.Persistence;
+import application.model.Sleeper;
 import application.model.dto.MainDto;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,6 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ViewManager {
+
+    private Sleeper sleeper = new Sleeper();
 
     public HBox initializeMainLayout(
             Persistence persistence,
@@ -30,6 +33,7 @@ public class ViewManager {
         }
 
         Parent leftParent = leftWeatherPaneController.getParent();
+        sleeper.sleep(); // weatherbit.io API free version enables only 1 request per second
         Parent rightParent = rightWeatherPaneController.getParent();
 
         hBox.getChildren().addAll(leftParent, rightParent);
@@ -61,5 +65,9 @@ public class ViewManager {
         HBox hBox = (HBox) scene.getRoot();
 
         return hBox.getChildren().indexOf(parent);
+    }
+
+    public void setSleeper(Sleeper sleeper) {
+        this.sleeper = sleeper;
     }
 }

@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.Sleeper;
 import application.model.WeatherData;
 import application.model.dto.MainDto;
 import application.model.Persistence;
@@ -17,6 +18,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class WeatherPaneController extends BaseController {
+
+    private final Sleeper sleeper;
 
     private static final String CURRENT_WEATHER_URL = "http://api.weatherbit.io/v2.0/current?lang=pl";
     private static final String DAILY_FORECAST_URL = "http://api.weatherbit.io/v2.0/forecast/daily?lang=pl&days=6";
@@ -62,6 +65,7 @@ public class WeatherPaneController extends BaseController {
     public WeatherPaneController(ViewManager viewManager, Persistence persistence) {
         super(viewManager, "WeatherPane.fxml");
 
+        sleeper = new Sleeper();
         this.persistence = persistence;
         setControlsOnCreate();
     }
@@ -80,7 +84,7 @@ public class WeatherPaneController extends BaseController {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
             MainDto currentWeatherData = weatherData.getWeatherData(cityName, CURRENT_WEATHER_URL);
-            sleep(); // weatherbit.io API free version enables only 1 request per second
+            sleeper.sleep(); // weatherbit.io API free version enables only 1 request per second
             MainDto dailyForecastData = weatherData.getWeatherData(cityName, DAILY_FORECAST_URL);
 
             Platform.runLater(() -> {
@@ -140,14 +144,5 @@ public class WeatherPaneController extends BaseController {
         weatherTabPane.setVisible(true);
 
         deleteCityButton.setVisible(true);
-    }
-
-    private void sleep() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            e.printStackTrace();
-        }
     }
 }

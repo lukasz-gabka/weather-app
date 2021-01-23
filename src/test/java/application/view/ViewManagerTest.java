@@ -4,6 +4,7 @@ import application.controller.MainPaneController;
 import application.controller.WeatherDataPaneController;
 import application.controller.WeatherPaneController;
 import application.model.Persistence;
+import application.model.Sleeper;
 import application.model.dto.MainDto;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.layout.VBox;
 import mainDtoTestGenerator.MainDtoTestGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -29,10 +31,15 @@ class ViewManagerTest {
     //without jxfPanel, ExceptionInInitializerError and IllegalStateException is thrown
     JFXPanel jfxPanel = new JFXPanel();
 
-    ViewManager viewManager = new ViewManager();
     String[] cities = {"Berlin", "Paris"};
     String[] citiesWithIndex0Null = {null, "Paris"};
     String[] citiesWithIndex1Null = {"Berlin", null};
+
+    @InjectMocks
+    ViewManager viewManager = new ViewManager();
+
+    @Mock
+    Sleeper sleeper;
 
     @Mock
     MainPaneController mainPaneController;
