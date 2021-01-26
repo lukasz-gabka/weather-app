@@ -4,10 +4,10 @@ import application.controller.MainPaneController;
 import application.controller.WeatherDataPaneController;
 import application.controller.WeatherPaneController;
 import application.model.Persistence;
-import application.model.Sleeper;
 import application.model.dto.MainDto;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -19,8 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -37,9 +36,6 @@ class ViewManagerTest {
 
     @InjectMocks
     ViewManager viewManager = new ViewManager();
-
-    @Mock
-    Sleeper sleeper;
 
     @Mock
     MainPaneController mainPaneController;
@@ -134,6 +130,21 @@ class ViewManagerTest {
     }
 
     @Test
+    void shouldSetParentToTabWhenInitializingCurrentWeatherLayout() {
+        //given
+        MainDtoTestGenerator generator = new MainDtoTestGenerator();
+        MainDto currentWeatherData = generator.getCurrentWeatherData();
+
+        Tab tab = new Tab();
+
+        //when
+        viewManager.initializeCurrentWeatherLayout(currentWeatherData, tab);
+
+        //then
+        assertThat(tab.getContent(), notNullValue());
+    }
+
+    @Test
     void shouldAddWeatherDataPaneToVBox() {
         //given
         given(weatherDataPaneController.getParent()).willReturn(new Pane());
@@ -150,11 +161,12 @@ class ViewManagerTest {
     @Test
     void shouldAddToVBox5WeatherDataPanes() {
         //given
-        MainDto dailyForecastData = generateWeatherObject();
+        MainDtoTestGenerator generator = new MainDtoTestGenerator();
+        MainDto dailyForecastData = generator.getDailyForecastData();
         VBox vBox = new VBox();
 
         //when
-        viewManager.initializeWeatherDataLayout(vBox, dailyForecastData);
+        viewManager.initializeDailyForecastLayout(vBox, dailyForecastData);
 
         //then
         assertThat(vBox.getChildren().size(), equalTo(5));
@@ -185,12 +197,5 @@ class ViewManagerTest {
         given(mainPaneController.getParent()).willReturn(new HBox());
         given(leftWeatherPaneController.getParent()).willReturn(new Pane());
         given(rightWeatherPaneController.getParent()).willReturn(new Pane());
-    }
-
-    private MainDto generateWeatherObject() {
-        String dailyForecastDataPath = "src/test/resources/DailyForecastJson.txt";
-        MainDtoTestGenerator generator = new MainDtoTestGenerator();
-
-        return generator.getMainDto(dailyForecastDataPath);
     }
 }

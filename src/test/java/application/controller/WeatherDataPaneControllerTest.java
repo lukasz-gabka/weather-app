@@ -27,10 +27,8 @@ class WeatherDataPaneControllerTest {
 
     @BeforeAll
     void generateWeatherObjects() {
-        String currentWeatherDataPath = "src/test/resources/CurrentWeatherJson.txt";
         MainDtoTestGenerator generator = new MainDtoTestGenerator();
-
-        currentWeatherData = generator.getMainDto(currentWeatherDataPath);
+        currentWeatherData = generator.getCurrentWeatherData();
 
         controller = new WeatherDataPaneController(new ViewManager(), currentWeatherData, 0);
     }

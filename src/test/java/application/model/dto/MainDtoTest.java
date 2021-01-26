@@ -22,13 +22,13 @@ class MainDtoTest {
     @Test
     void shouldReturnCityNameAndCountryCodeSeparatedWithACommaString() {
         //given
-        mainDto.setCity_name("Berlin");
-        mainDto.setCountry_code("DE");
+        mainDto.setCity_name("Katowice");
+        mainDto.setCountry_code("PL");
 
         //when
         String fullName = mainDto.getFullCityName();
 
         //then
-        assertThat(fullName, equalTo("Berlin, DE"));
+        assertThat(fullName, equalTo("Katowice, PL"));
     }
 }

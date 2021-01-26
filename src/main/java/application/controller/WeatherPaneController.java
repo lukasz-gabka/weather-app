@@ -1,13 +1,11 @@
 package application.controller;
 
-import application.model.Sleeper;
 import application.model.WeatherData;
 import application.model.dto.MainDto;
 import application.model.Persistence;
 import application.view.ViewManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -19,13 +17,11 @@ import java.util.concurrent.Executors;
 
 public class WeatherPaneController extends BaseController {
 
-    private final Sleeper sleeper;
-
-    private static final String CURRENT_WEATHER_URL = "http://api.weatherbit.io/v2.0/current?lang=pl";
-    private static final String DAILY_FORECAST_URL = "http://api.weatherbit.io/v2.0/forecast/daily?lang=pl&days=6";
     private static final String LOADING_MESSAGE = "Wczytywanie...";
 
     private final Persistence persistence;
+    private final WeatherData weatherData;
+    private MainDto[] weatherDataDto;
 
     @FXML
     private TextField typeCityTextField;
@@ -62,11 +58,11 @@ public class WeatherPaneController extends BaseController {
         saveToPersistence(null);
     }
 
-    public WeatherPaneController(ViewManager viewManager, Persistence persistence) {
+    public WeatherPaneController(ViewManager viewManager, Persistence persistence, WeatherData weatherData) {
         super(viewManager, "WeatherPane.fxml");
 
-        sleeper = new Sleeper();
         this.persistence = persistence;
+        this.weatherData = weatherData;
         setControlsOnCreate();
     }
 
@@ -76,40 +72,34 @@ public class WeatherPaneController extends BaseController {
     }
 
     public void initializeWeatherLayout(String cityName) {
-        this.errorLabel.setTextFill(Color.BLACK);
-        this.errorLabel.setText(LOADING_MESSAGE);
-
-        WeatherData weatherData = new WeatherData();
+        setErrorLabel(Color.BLACK, LOADING_MESSAGE);
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
-            MainDto currentWeatherData = weatherData.getWeatherData(cityName, CURRENT_WEATHER_URL);
-            sleeper.sleep(); // weatherbit.io API free version enables only 1 request per second
-            MainDto dailyForecastData = weatherData.getWeatherData(cityName, DAILY_FORECAST_URL);
-
+            weatherDataDto = weatherData.getWeatherData(cityName);
             Platform.runLater(() -> {
-                handleWeatherData(currentWeatherData, dailyForecastData);
+                handleWeatherData(weatherDataDto[0], weatherDataDto[1]);
             });
         });
         executorService.shutdown();
     }
 
-    private void handleWeatherData(MainDto currentWeatherData, MainDto dailyForecastData) {
+    private void setErrorLabel(Color color, String message) {
+        this.errorLabel.setTextFill(color);
+        this.errorLabel.setText(message);
+    }
+
+    public void handleWeatherData(MainDto currentWeatherData, MainDto dailyForecastData) {
         if (currentWeatherData.getErrorMessage() == null) {
             String fullCityName = dailyForecastData.getFullCityName();
-
             setControlsOnHandleData(fullCityName);
 
-            WeatherDataPaneController weatherDataPaneController = new WeatherDataPaneController(viewManager, currentWeatherData, 0);
-            Parent currentWeatherParent = weatherDataPaneController.getParent();
-            currentWeatherTab.setContent(currentWeatherParent);
-
-            viewManager.initializeWeatherDataLayout(dailyForecastVBox, dailyForecastData);
+            viewManager.initializeCurrentWeatherLayout(currentWeatherData, currentWeatherTab);
+            viewManager.initializeDailyForecastLayout(dailyForecastVBox, dailyForecastData);
 
             saveToPersistence(dailyForecastData.getCityName());
         } else {
-            this.errorLabel.setTextFill(Color.RED);
-            this.errorLabel.setText(currentWeatherData.getErrorMessage());
+            setErrorLabel(Color.RED, currentWeatherData.getErrorMessage());
         }
     }
 
@@ -144,5 +134,29 @@ public class WeatherPaneController extends BaseController {
         weatherTabPane.setVisible(true);
 
         deleteCityButton.setVisible(true);
+    }
+
+    public TextField getTypeCityTextField() {
+        return typeCityTextField;
+    }
+
+    public Label getErrorLabel() {
+        return errorLabel;
+    }
+
+    public Button getDeleteCityButton() {
+        return deleteCityButton;
+    }
+
+    public TabPane getWeatherTabPane() {
+        return weatherTabPane;
+    }
+
+    public Tab getCurrentWeatherTab() {
+        return currentWeatherTab;
+    }
+
+    public VBox getDailyForecastVBox() {
+        return dailyForecastVBox;
     }
 }

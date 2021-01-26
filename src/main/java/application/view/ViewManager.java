@@ -6,6 +6,7 @@ import application.model.Sleeper;
 import application.model.dto.MainDto;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -41,7 +42,13 @@ public class ViewManager {
         return hBox;
     }
 
-    public void initializeWeatherDataLayout(VBox dailyForecastVBox, MainDto dailyForecastData) {
+    public void initializeCurrentWeatherLayout(MainDto data, Tab tab) {
+        WeatherDataPaneController weatherDataPaneController = new WeatherDataPaneController(this, data, 0);
+        Parent currentWeatherParent = weatherDataPaneController.getParent();
+        tab.setContent(currentWeatherParent);
+    }
+
+    public void initializeDailyForecastLayout(VBox dailyForecastVBox, MainDto dailyForecastData) {
         int tomorrowDataIndex = 1;
         int fifthDayDataIndex = dailyForecastData.getData().size() - 1;
 

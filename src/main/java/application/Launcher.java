@@ -3,6 +3,7 @@ package application;
 import application.controller.MainPaneController;
 import application.controller.WeatherPaneController;
 import application.model.Persistence;
+import application.model.WeatherData;
 import application.view.ViewManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -27,8 +28,8 @@ public class Launcher extends Application {
         HBox mainLayout = viewManager.initializeMainLayout(
                 persistence,
                 new MainPaneController(viewManager),
-                new WeatherPaneController(viewManager, persistence),
-                new WeatherPaneController(viewManager, persistence)
+                new WeatherPaneController(viewManager, persistence, new WeatherData()),
+                new WeatherPaneController(viewManager, persistence, new WeatherData())
         );
         Scene scene = new Scene(mainLayout);
 

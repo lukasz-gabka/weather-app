@@ -138,6 +138,7 @@ class PersistenceTest {
 
         fileInputStream.close();
         objectInputStream.close();
+
         return citiesFromFile;
     }
 
