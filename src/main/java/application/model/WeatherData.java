@@ -27,8 +27,8 @@ public class WeatherData {
         JsonParser jsonParser = new JsonParser();
 
         try {
-            HttpResponse httpResult = client.execute(request);
-            String result = jsonParser.convertJSONToString(httpResult);
+            HttpResponse response = client.execute(request);
+            String result = jsonParser.convertJSONToString(response);
             MainDto data = jsonParser.convertStringToObject(result);
             data.isExist();
 
@@ -55,9 +55,9 @@ public class WeatherData {
         return weatherDataDto;
     }
 
-    private MainDto createErrorMainDto(String errorMessage) {
+    private MainDto createErrorMainDto(String message) {
         MainDto data = new MainDto();
-        data.setErrorMessage(errorMessage);
+        data.setErrorMessage(message);
 
         return data;
     }

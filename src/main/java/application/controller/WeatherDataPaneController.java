@@ -44,9 +44,9 @@ public class WeatherDataPaneController extends BaseController {
     public WeatherDataPaneController(ViewManager viewManager, MainDto mainDto, int index) {
         super(viewManager, "WeatherDataPane.fxml");
 
-        DataDto dataObject = mainDto.getData().get(index);
+        DataDto dataDto = mainDto.getData().get(index);
 
-        setDataToWeatherLayout(dataObject);
+        setDataToWeatherLayout(dataDto);
     }
 
     private void setDataToWeatherLayout(DataDto dataDto) {

@@ -1,7 +1,6 @@
 package mainDtoTestGenerator;
 
 import application.model.dto.MainDto;
-import com.sun.tools.javac.Main;
 
 import java.io.*;
 

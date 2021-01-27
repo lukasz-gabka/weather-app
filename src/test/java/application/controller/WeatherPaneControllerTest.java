@@ -34,6 +34,7 @@ class WeatherPaneControllerTest {
 
     private final String CITY = "Katowice";
     private final MainDtoTestGenerator generator = new MainDtoTestGenerator();
+    private final MainDto[] weatherDataDto = generator.getWeatherDataArray();
 
     @Mock
     Persistence persistence;
@@ -65,8 +66,9 @@ class WeatherPaneControllerTest {
     @Test
     void shouldInitializeWeatherLayoutWhenTypingCityName() {
         //given
-        doNothing().when(weatherPaneController).initializeWeatherLayout(anyString());
+        doNothing().when(weatherPaneController).initializeWeatherLayout(CITY);
         weatherPaneController.getTypeCityTextField().setText(CITY);
+        weatherPaneController.getTypeCityTextField().setEditable(true);
 
         //when
         weatherPaneController.typeCityAction();
@@ -78,6 +80,35 @@ class WeatherPaneControllerTest {
     @Test
     void shouldNotInitializeWeatherLayoutWhenTypingNullCityName() {
         //given
+        weatherPaneController.getTypeCityTextField().setText("");
+        weatherPaneController.getTypeCityTextField().setEditable(true);
+
+        //when
+        weatherPaneController.typeCityAction();
+
+        //then
+        verify(weatherPaneController, never()).initializeWeatherLayout(anyString());
+    }
+
+    @Test
+    void shouldNotInitializeWeatherLayoutWhenCityTextFieldIsSetNotEditable() {
+        //given
+        weatherPaneController.getTypeCityTextField().setText(CITY);
+        weatherPaneController.getTypeCityTextField().setEditable(false);
+
+        //when
+        weatherPaneController.typeCityAction();
+
+        //then
+        verify(weatherPaneController, never()).initializeWeatherLayout(anyString());
+    }
+
+    @Test
+    void shouldNotInitializeWeatherLayoutWhenCityTextFieldIsNotSetAndNotEditable() {
+        //given
+        weatherPaneController.getTypeCityTextField().setText("");
+        weatherPaneController.getTypeCityTextField().setEditable(false);
+
         //when
         weatherPaneController.typeCityAction();
 
@@ -101,7 +132,7 @@ class WeatherPaneControllerTest {
     @Test
     void shouldSetControlsOnDeleteAction() {
         //given
-        doNothing().when(weatherPaneController).saveToPersistence(any());
+        doNothing().when(weatherPaneController).saveToPersistence(null);
 
         //when
         weatherPaneController.deleteCityAction();
@@ -119,7 +150,7 @@ class WeatherPaneControllerTest {
     @Test
     void shouldSaveToPersistenceWithNullWhenCallingDeleteCityAction() {
         //given
-        doNothing().when(weatherPaneController).saveToPersistence(any());
+        doNothing().when(weatherPaneController).saveToPersistence(null);
 
         //when
         weatherPaneController.deleteCityAction();
@@ -146,26 +177,22 @@ class WeatherPaneControllerTest {
     @Test
     void shouldSetErrorLabelTextWhileLoadingData() {
         //given
-        String LOADING_MESSAGE = "Wczytywanie...";
-        MainDto[] weatherDataDto = generator.getWeatherDataArray();
+        String loadingMessage = "Wczytywanie...";
         given(weatherData.getWeatherData(anyString())).willReturn(weatherDataDto);
-        doNothing().when(weatherPaneController).handleWeatherData(weatherDataDto[0], weatherDataDto[1]);
 
         //when
         weatherPaneController.initializeWeatherLayout(CITY);
 
         //then
-        assertThat(weatherPaneController.getErrorLabel().getText(), equalTo(LOADING_MESSAGE));
+        assertThat(weatherPaneController.getErrorLabel().getText(), equalTo(loadingMessage));
         assertThat(weatherPaneController.getErrorLabel().getTextFill(), equalTo(Color.BLACK));
     }
 
     @Test
     void shouldInitializeWeatherDataLayoutsWhenCallingHandleWeatherData() {
         //given
-        MainDto[] weatherDataDto = generator.getWeatherDataArray();
-
         //when
-        weatherPaneController.handleWeatherData(weatherDataDto[0], weatherDataDto[1]);
+        invokeHandleWeatherData();
 
         //then
         verify(viewManager).initializeCurrentWeatherLayout(weatherDataDto[0], weatherPaneController.getCurrentWeatherTab());
@@ -176,10 +203,8 @@ class WeatherPaneControllerTest {
     @Test
     void shouldSaveToPersistenceWithNameFromDailyForecastDataWhenCallingHandleWeatherData() {
         //given
-        MainDto[] weatherDataDto = generator.getWeatherDataArray();
-
         //when
-        weatherPaneController.handleWeatherData(weatherDataDto[0], weatherDataDto[1]);
+        invokeHandleWeatherData();
 
         //then
         verify(weatherPaneController).saveToPersistence(weatherDataDto[1].getCityName());
@@ -189,11 +214,10 @@ class WeatherPaneControllerTest {
     void shouldSetErrorLabelProperlyWhenCurrentWeatherDataErrorLabelIsNotNull() {
         //given
         String message = "Error message";
-        MainDto[] weatherDataDto = generator.getWeatherDataArray();
         weatherDataDto[0].setErrorMessage(message);
 
         //when
-        weatherPaneController.handleWeatherData(weatherDataDto[0], weatherDataDto[1]);
+        invokeHandleWeatherData();
 
         //then
         assertThat(weatherPaneController.getErrorLabel().getTextFill(), equalTo(Color.RED));
@@ -206,6 +230,17 @@ class WeatherPaneControllerTest {
             method.setAccessible(true);
 
             method.invoke(weatherPaneController, CITY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void invokeHandleWeatherData() {
+        try {
+            Method method = WeatherPaneController.class.getDeclaredMethod("handleWeatherData", MainDto.class, MainDto.class);
+            method.setAccessible(true);
+
+            method.invoke(weatherPaneController, weatherDataDto[0], weatherDataDto[1]);
         } catch (Exception e) {
             e.printStackTrace();
         }

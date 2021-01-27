@@ -4,6 +4,7 @@ import application.controller.MainPaneController;
 import application.controller.WeatherDataPaneController;
 import application.controller.WeatherPaneController;
 import application.model.Persistence;
+import application.model.Sleeper;
 import application.model.dto.MainDto;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
@@ -12,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import mainDtoTestGenerator.MainDtoTestGenerator;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -52,12 +54,16 @@ class ViewManagerTest {
     @Mock
     Persistence persistence;
 
+    @Mock
+    Sleeper sleeper;
+
     @Test
     void shouldReturnHBoxWithTwoParentsAsChildren() {
         //given
-        //when
         prepareMocks();
         given(persistence.isPersistenceLoaded()).willReturn(false);
+
+        //when
         HBox hBox = viewManager.initializeMainLayout(
                 persistence,
                 mainPaneController,

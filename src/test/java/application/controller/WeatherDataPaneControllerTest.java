@@ -20,10 +20,10 @@ class WeatherDataPaneControllerTest {
 
     //instantiation of jxfPanel is necessary to use controllers with JavaFX controls in test scope
     //without jxfPanel, ExceptionInInitializerError and IllegalStateException is thrown
-    JFXPanel jfxPanel = new JFXPanel();
+    private final JFXPanel jfxPanel = new JFXPanel();
 
-    WeatherDataPaneController controller;
-    MainDto currentWeatherData;
+    private WeatherDataPaneController controller;
+    private MainDto currentWeatherData;
 
     @BeforeAll
     void generateWeatherObjects() {

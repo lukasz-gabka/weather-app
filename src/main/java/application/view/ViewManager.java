@@ -43,21 +43,21 @@ public class ViewManager {
     }
 
     public void initializeCurrentWeatherLayout(MainDto data, Tab tab) {
-        WeatherDataPaneController weatherDataPaneController = new WeatherDataPaneController(this, data, 0);
-        Parent currentWeatherParent = weatherDataPaneController.getParent();
-        tab.setContent(currentWeatherParent);
+        WeatherDataPaneController controller = new WeatherDataPaneController(this, data, 0);
+        Parent parent = controller.getParent();
+        tab.setContent(parent);
     }
 
-    public void initializeDailyForecastLayout(VBox dailyForecastVBox, MainDto dailyForecastData) {
+    public void initializeDailyForecastLayout(VBox vBox, MainDto weatherData) {
         int tomorrowDataIndex = 1;
-        int fifthDayDataIndex = dailyForecastData.getData().size() - 1;
+        int fifthDayDataIndex = weatherData.getData().size() - 1;
 
         for (int i = tomorrowDataIndex; i <= fifthDayDataIndex; i++) {
-            int weatherPaneVBoxIndex = i - 1;
+            int vBoxIndex = i - 1;
             initializeSingleWeatherDataPane(
-                    dailyForecastVBox,
-                    new WeatherDataPaneController(this, dailyForecastData, i),
-                    weatherPaneVBoxIndex
+                    vBox,
+                    new WeatherDataPaneController(this, weatherData, i),
+                    vBoxIndex
             );
         }
     }

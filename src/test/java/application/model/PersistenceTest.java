@@ -14,9 +14,9 @@ class PersistenceTest {
     private final String FILE_PATH = System.getProperty("user.dir") + File.separator + "testDir";
     private final String FILE_NAME = File.separator + "testFile.txt";
 
-    Persistence persistence = new Persistence();
-    File path = new File(FILE_PATH);
-    File file = new File(FILE_PATH + FILE_NAME);
+    private final Persistence persistence = new Persistence();
+    private final File path = new File(FILE_PATH);
+    private final File file = new File(FILE_PATH + FILE_NAME);
 
     String[] cities = {"Berlin", "Paris"};
 
@@ -56,10 +56,9 @@ class PersistenceTest {
 
         //when
         persistence.saveToPersistence();
-
-        //then
         String[] citiesFromFile = readFile();
 
+        //then
         assertThat(citiesFromFile, equalTo(cities));
     }
 
@@ -71,7 +70,7 @@ class PersistenceTest {
 
         //when
         //then
-        assertThrows(IllegalArgumentException.class, () -> {persistence.saveToPersistence();});
+        assertThrows(IllegalArgumentException.class, persistence::saveToPersistence);
     }
 
     @Test
@@ -82,10 +81,9 @@ class PersistenceTest {
 
         //when
         persistence.saveToPersistence();
-
-        //then
         String[] citiesFromFile = readFile();
 
+        //then
         assertThat(citiesFromFile, equalTo(cities));
     }
 
@@ -96,10 +94,9 @@ class PersistenceTest {
 
         //when
         persistence.loadFromPersistence();
-
-        //then
         String[] citiesFromFile = persistence.getCities();
 
+        //then
         assertThat(citiesFromFile, equalTo(cities));
     }
 

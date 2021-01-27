@@ -11,11 +11,11 @@ public class Persistence {
     private File file;
 
     public Persistence() {
-        String FILE_PATH = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
-        String FILE_NAME = File.separator + "SavedCities.txt";
+        String filePath = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
+        String fileName = File.separator + "SavedCities.txt";
 
-        path = new File(FILE_PATH);
-        file = new File(FILE_PATH + FILE_NAME);
+        path = new File(filePath);
+        file = new File(filePath + fileName);
         isPersistenceLoaded = false;
     }
 
@@ -37,10 +37,9 @@ public class Persistence {
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             cities = (String[]) objectInputStream.readObject();
 
-            isPersistenceLoaded = true;
-
             objectInputStream.close();
             fileInputStream.close();
+            isPersistenceLoaded = true;
         } catch (Exception e) {
             e.printStackTrace();
         }

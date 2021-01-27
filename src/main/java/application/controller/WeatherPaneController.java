@@ -18,6 +18,8 @@ import java.util.concurrent.Executors;
 public class WeatherPaneController extends BaseController {
 
     private static final String LOADING_MESSAGE = "Wczytywanie...";
+    private static final Font FONT_NORMAL = Font.font("System", FontWeight.NORMAL, 12);
+    private static final Font FONT_BOLD = Font.font("System", FontWeight.BOLD, 12);
 
     private final Persistence persistence;
     private final WeatherData weatherData;
@@ -46,7 +48,7 @@ public class WeatherPaneController extends BaseController {
 
     @FXML
     void typeCityAction() {
-        if (!typeCityTextField.getText().equals("")) {
+        if (isCityTextFieldNotEmpty() && isCityTextFieldEditable()) {
             initializeWeatherLayout(this.typeCityTextField.getText());
         }
     }
@@ -89,7 +91,7 @@ public class WeatherPaneController extends BaseController {
         this.errorLabel.setText(message);
     }
 
-    public void handleWeatherData(MainDto currentWeatherData, MainDto dailyForecastData) {
+    private void handleWeatherData(MainDto currentWeatherData, MainDto dailyForecastData) {
         if (currentWeatherData.getErrorMessage() == null) {
             String fullCityName = dailyForecastData.getFullCityName();
             setControlsOnHandleData(fullCityName);
@@ -110,7 +112,7 @@ public class WeatherPaneController extends BaseController {
         dailyForecastVBox.getChildren().clear();
         currentWeatherTab.setContent(null);
 
-        typeCityTextField.setFont(Font.font("System", FontWeight.NORMAL, 12));
+        typeCityTextField.setFont(FONT_NORMAL);
         typeCityTextField.setEditable(true);
         typeCityTextField.clear();
     }
@@ -123,12 +125,12 @@ public class WeatherPaneController extends BaseController {
         weatherTabPane.setVisible(false);
     }
 
-    private void setControlsOnHandleData(String fullCityName) {
+    private void setControlsOnHandleData(String cityName) {
         errorLabel.setText("");
 
         typeCityTextField.setEditable(false);
-        typeCityTextField.setFont(Font.font("System", FontWeight.BOLD, 12));
-        typeCityTextField.setText(fullCityName);
+        typeCityTextField.setFont(FONT_BOLD);
+        typeCityTextField.setText(cityName);
 
         weatherTabPane.getSelectionModel().select(0);
         weatherTabPane.setVisible(true);
@@ -158,5 +160,13 @@ public class WeatherPaneController extends BaseController {
 
     public VBox getDailyForecastVBox() {
         return dailyForecastVBox;
+    }
+
+    private boolean isCityTextFieldNotEmpty() {
+        return !typeCityTextField.getText().equals("");
+    }
+
+    private boolean isCityTextFieldEditable() {
+        return typeCityTextField.isEditable();
     }
 }
