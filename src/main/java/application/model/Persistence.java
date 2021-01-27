@@ -7,42 +7,45 @@ public class Persistence {
     private String[] cities = new String[2];
     private boolean isPersistenceLoaded;
 
-    private static final String FILE_PATH = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
-    private static final String FILE_NAME =  File.separator + "SavedCities.txt";
+    private File path;
+    private File file;
 
     public Persistence() {
+        String filePath = System.getProperty("user.home") + File.separator + "DoradcaPogodowy";
+        String fileName = File.separator + "SavedCities.txt";
+
+        path = new File(filePath);
+        file = new File(filePath + fileName);
         isPersistenceLoaded = false;
     }
 
     public void saveToPersistence() {
-        try {
-            File filePath = new File(FILE_PATH);
-            if (!filePath.exists()) {
-                if (filePath.mkdir()) {
+            if (!path.exists()) {
+                if (path.mkdir()) {
                     createFile(cities);
+                } else {
+                    throw new IllegalArgumentException ("Cannot create directory");
                 }
             } else {
                 createFile(cities);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void loadFromPersistence() {
         try {
-            FileInputStream fileInputStream = new FileInputStream(FILE_PATH + FILE_NAME);
+            FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             cities = (String[]) objectInputStream.readObject();
 
+            objectInputStream.close();
+            fileInputStream.close();
             isPersistenceLoaded = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static boolean isFileExist() {
-        File file = new File(FILE_PATH + FILE_NAME);
+    public boolean isFileExist() {
         return file.exists();
     }
 
@@ -56,7 +59,6 @@ public class Persistence {
 
     private void createFile(String[] cities) {
         try {
-            File file = new File(FILE_PATH + FILE_NAME);
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(cities);
@@ -70,5 +72,21 @@ public class Persistence {
 
     public String[] getCities() {
         return cities;
+    }
+
+    public File getPath() {
+        return path;
+    }
+
+    public void setCities(String[] cities) {
+        this.cities = cities;
+    }
+
+    public void setPath(File path) {
+        this.path = path;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 }

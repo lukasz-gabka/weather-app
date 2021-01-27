@@ -11,11 +11,22 @@ public class DataDto {
     private float temp;
     private float wind_spd;
     private double wind_dir;
-    private float app_temp;
     private float rh;
 
+    /**
+     * Date should be in format YY-MM-DD
+     * While getting current weather data, the datetime field has format YY-MM-DD:HH
+     * While getting daily forecast data, the datetime field has proper format
+     */
+    public String getDate() {
+        if (datetime.contains(":")) {
+            return trimDateTime();
+        }
+        return datetime;
+    }
+
     public int getPres() {
-        return roundFloatToInt(pres);
+        return Math.round(pres);
     }
 
     public int getClouds() {
@@ -26,31 +37,37 @@ public class DataDto {
         return weather;
     }
 
-    public String getDatetime() {
-        return datetime;
-    }
-
     public int getTemp() {
         return Math.round(temp);
     }
 
     public int getWindSpd() {
-        return Math.round(wind_spd * 3.6f); //converts "m/s" into "km/h"
+        return Math.round(convertUnit(wind_spd));
     }
 
     public double getWindDir() {
         return Math.round(wind_dir);
     }
 
-    public int getAppTemp() {
-        return Math.round(app_temp);
-    }
-
     public int getRh() {
         return Math.round(rh);
     }
 
-    private int roundFloatToInt(float number) {
-        return Math.round(number);
+    private String trimDateTime() {
+        int colonPosition = datetime.indexOf(":");
+        return datetime.substring(0, colonPosition);
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+
+    public void setWind_spd(float wind_spd) {
+        this.wind_spd = wind_spd;
+    }
+
+    //converts "m/s" into "km/h"
+    private float convertUnit(float value) {
+        return value * 3.6f;
     }
 }

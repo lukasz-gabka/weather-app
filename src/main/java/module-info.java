@@ -2,6 +2,7 @@ module application {
 
     requires javafx.fxml;
     requires javafx.controls;
+    requires javafx.swing;
     requires java.net.http;
     requires com.google.gson;
     requires org.apache.httpcomponents.httpcore;
