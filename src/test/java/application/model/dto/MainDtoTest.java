@@ -16,6 +16,7 @@ class MainDtoTest {
         mainDto.setData(null);
 
         //when
+        //then
         assertThrows(NullPointerException.class, mainDto::isExist);
     }
 

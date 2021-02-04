@@ -13,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import mainDtoTestGenerator.MainDtoTestGenerator;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,32 +29,32 @@ class ViewManagerTest {
 
     //instantiation of jxfPanel is necessary to use controllers with JavaFX controls in test scope
     //without jxfPanel, ExceptionInInitializerError and IllegalStateException is thrown
-    JFXPanel jfxPanel = new JFXPanel();
+    private JFXPanel jfxPanel = new JFXPanel();
 
-    String[] cities = {"Berlin", "Paris"};
-    String[] citiesWithIndex0Null = {null, "Paris"};
-    String[] citiesWithIndex1Null = {"Berlin", null};
+    private String[] cities = {"Berlin", "Paris"};
+    private String[] citiesWithIndex0Null = {null, "Paris"};
+    private String[] citiesWithIndex1Null = {"Berlin", null};
 
     @InjectMocks
-    ViewManager viewManager = new ViewManager();
+    private ViewManager viewManager = new ViewManager();
 
     @Mock
-    MainPaneController mainPaneController;
+    private MainPaneController mainPaneController;
 
     @Mock
-    WeatherPaneController leftWeatherPaneController;
+    private WeatherPaneController leftWeatherPaneController;
 
     @Mock
-    WeatherPaneController rightWeatherPaneController;
+    private WeatherPaneController rightWeatherPaneController;
 
     @Mock
-    WeatherDataPaneController weatherDataPaneController;
+    private WeatherDataPaneController weatherDataPaneController;
 
     @Mock
-    Persistence persistence;
+    private Persistence persistence;
 
     @Mock
-    Sleeper sleeper;
+    private Sleeper sleeper;
 
     @Test
     void shouldReturnHBoxWithTwoParentsAsChildren() {
