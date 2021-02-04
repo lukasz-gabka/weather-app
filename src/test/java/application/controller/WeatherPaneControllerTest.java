@@ -37,17 +37,17 @@ class WeatherPaneControllerTest {
     private final MainDto[] weatherDataDto = generator.getWeatherDataArray();
 
     @Mock
-    Persistence persistence;
+    private Persistence persistence;
 
     @Mock
-    ViewManager viewManager;
+    private ViewManager viewManager;
 
     @Mock
-    WeatherData weatherData;
+    private WeatherData weatherData;
 
     @InjectMocks
     @Spy
-    WeatherPaneController weatherPaneController;
+    private WeatherPaneController weatherPaneController;
 
     @AfterEach
     void resetMocks() {
