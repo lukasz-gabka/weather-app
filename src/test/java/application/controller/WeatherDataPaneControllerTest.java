@@ -8,14 +8,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import mainDtoTestGenerator.MainDtoTestGenerator;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class WeatherDataPaneControllerTest {
 
     //instantiation of jxfPanel is necessary to use controllers with JavaFX controls in test scope
@@ -25,7 +24,7 @@ class WeatherDataPaneControllerTest {
     private WeatherDataPaneController controller;
     private MainDto currentWeatherData;
 
-    @BeforeAll
+    @BeforeEach
     void generateWeatherObjects() {
         MainDtoTestGenerator generator = new MainDtoTestGenerator();
         currentWeatherData = generator.getCurrentWeatherData();
@@ -36,21 +35,22 @@ class WeatherDataPaneControllerTest {
     @Test
     void shouldRenderProperWeatherIcon() {
         //given
+        //when
         ImageView imageView = controller.getWeatherImageView();
+
+        //then
         Image icon = imageView.getImage();
         String imagePath = icon.getUrl();
 
-        //when
-        //then
         assertThat(imagePath, containsString("images/icons/c02n.png"));
     }
 
     @Test
     void temperatureLabelShouldContainProperUnitSymbol() {
         //given
+        //when
         String temperature = controller.getTemperatureLabel().getText();
 
-        //when
         //then
         assertThat(temperature, containsString("\u00B0C"));
     }
@@ -58,9 +58,9 @@ class WeatherDataPaneControllerTest {
     @Test
     void pressureLabelShouldContainProperUnitSymbol() {
         //given
+        //when
         String pressure = controller.getPressureLabel().getText();
 
-        //when
         //then
         assertThat(pressure, containsString("hPa"));
     }
@@ -68,9 +68,9 @@ class WeatherDataPaneControllerTest {
     @Test
     void cloudsLabelShouldContainPercentSign() {
         //given
+        //when
         String clouds = controller.getCloudsLabel().getText();
 
-        //when
         //then
         assertThat(clouds, containsString("%"));
     }
@@ -78,9 +78,9 @@ class WeatherDataPaneControllerTest {
     @Test
     void humidityLabelShouldContainPercentSign() {
         //given
+        //when
         String humidity = controller.getHumidityLabel().getText();
 
-        //when
         //then
         assertThat(humidity, containsString("%"));
     }
@@ -88,9 +88,9 @@ class WeatherDataPaneControllerTest {
     @Test
     void windSpeedLabelShouldContainProperUnitSymbol() {
         //given
+        //when
         String windSpeed = controller.getWindSpeedLabel().getText();
 
-        //when
         //then
         assertThat(windSpeed, containsString("km/h"));
     }
@@ -98,14 +98,14 @@ class WeatherDataPaneControllerTest {
     @Test
     void arrowImageViewShouldHaveProperRotationAngle() {
         //given
+        //when
         ImageView imageView = controller.getArrowImageView();
-        double angleFromImageView = imageView.getRotate();
 
+        //then
+        double angleFromImageView = imageView.getRotate();
         DataDto dataDto = currentWeatherData.getData().get(0);
         double angleFromDto = dataDto.getWindDir();
 
-        //when
-        //then
         assertThat(angleFromImageView, equalTo(angleFromDto));
     }
 }
