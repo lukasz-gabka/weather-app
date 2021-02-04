@@ -8,7 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PersistenceTest {
 
     private final String FILE_PATH = System.getProperty("user.dir") + File.separator + "testDir";
@@ -20,27 +19,20 @@ class PersistenceTest {
 
     String[] cities = {"Berlin", "Paris"};
 
-    @BeforeAll
-     void setFiles() {
+    @BeforeEach
+    void setup() {
         persistence.setPath(path);
         persistence.setFile(file);
-    }
-
-    @BeforeEach
-    void restartFiles() {
-        if (persistence.getPath() != path) {
-            persistence.setPath(path);
-        }
+        createPath(path);
     }
 
     @AfterEach
-    void clean() {
+    void tearDown() {
         deleteDirectoryWithFile();
-        persistence.setCities(null);
     }
 
     @Test
-    void shouldReturnFalseIfFileDoesNotExist() throws IOException {
+    void shouldReturnFalseIfFileDoesNotExist() {
         //given
         //when
         boolean isFileExist = persistence.isFileExist();
@@ -65,7 +57,7 @@ class PersistenceTest {
     @Test
     void shouldThrowAnExceptionIfCreatingPathFails() {
         //given
-        persistence.setPath(new File("?wrong:path"));
+        persistence.setPath(new File("/#%@$@^!?:"));
         persistence.setCities(cities);
 
         //when
@@ -76,7 +68,7 @@ class PersistenceTest {
     @Test
     void shouldCreateNewFileIfPathExists() throws IOException, ClassNotFoundException {
         //given
-        createPath();
+        createPath(path);
         persistence.setCities(cities);
 
         //when
@@ -165,8 +157,8 @@ class PersistenceTest {
         delete(FILE_PATH);
     }
 
-    private void createPath() {
-        File path = persistence.getPath();
+    private void createPath(File path) {
+        //File path = persistence.getPath();
         path.mkdir();
     }
 }

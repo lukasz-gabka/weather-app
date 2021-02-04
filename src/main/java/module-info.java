@@ -11,4 +11,7 @@ module application {
     opens application;
     opens application.controller;
     opens images.icons;
+
+    exports application;
+    opens application.model.dto to com.google.gson;
 }
